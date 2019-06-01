@@ -1,8 +1,6 @@
-pragma solidity ^0.5.3;
+pragma solidity ^0.5.0;
 
 contract Tender {
- 
-    enum tenderPeriod { bidding, revelation, end }
     
     address private owner;
     string private projectDescription;
@@ -12,25 +10,33 @@ contract Tender {
     address private winner;
     uint private highestBid;
     bool private winnerExists;
-    mapping(address => bytes32) hashedBids;
+    bool private checkedByOwner;
+    mapping(address => closedBid) hashedBids;
     mapping(address => bool) bidExists;
-    bid[] private bidQueue;
+    openBid[] private bidQueue;
     
     
     event tenderEndsWithWinner(address winner, uint bid);
     event tenderEndsWithoutWinner();
 
-    struct bid {
+    struct closedBid {
+        bytes32 hash;
+        uint time;
+    }
+
+    struct openBid {
         uint amount;
-        address owner;
+        uint time;
+        address payable owner;
     }
     
-    constructor(string desc, uint biddingDuration, uint revelationDuration, uint depositAmount) public payable {
-        this.owner = msg.sender;
-        this.projectDescription = desc;
-        this.biddingEnd = now + (biddingDuration * 1 minutes);
-        this.revelationEnd = this.biddingEnd + (revelationDuration * 1 minutes);
-        this.deposit = depositAmount;
+    // Bidding duration in minutes
+    constructor(string memory desc, uint biddingDuration, uint revelationDuration, uint depositAmount) public payable {
+        owner = msg.sender;
+        projectDescription = desc;
+        biddingEnd = now + (biddingDuration * 1 minutes);
+        revelationEnd = biddingEnd + (revelationDuration * 1 minutes);
+        deposit = depositAmount; // Deposit in Ether
     }
     
     modifier onlyBefore(uint time) { 
@@ -44,46 +50,131 @@ contract Tender {
     }
     
     modifier ownerOnly() {
-        require(this.owner == msg.sender);
+        require(owner == msg.sender);
         _;
     }
     
-    function hasBidBefore(address bidder) private returns (bool) {
+    function hasBidBefore(address bidder) private view returns (bool) {
         return bidExists[bidder];
     }
     
-    function bid(bytes32 hashedBid) public payable onlyBefore(this.biddingEnd) {
+    function makeBid(bytes32 hashedBid) public payable onlyBefore(biddingEnd) {
         if (hasBidBefore(msg.sender)) {
-            hashedBids[msg.sender] = hashedBid;
+            hashedBids[msg.sender] = closedBid(hashedBid, now);
         } else {
-            // TODO: check msg.value and receives deposit, handle error if not enough
-            hashedBids[msg.sender] = hashedBid;
+            require(msg.value > (deposit * 1 ether), "Deposit not enough to make a bid!");
+            hashedBids[msg.sender] = closedBid(hashedBid, now);
             bidExists[msg.sender] = true;
         }
     }
-
-    function reveal(uint nonce, uint bid) public onlyAfter(this.biddingEnd) onlyBefore(this.revelationEnd) {
-        require(hasBidBefore[msg.sender]);
+    
+    function revealBid(uint nonce, uint bidAmt) public onlyAfter(biddingEnd) onlyBefore(revelationEnd) {
+        require(hasBidBefore(msg.sender));
         
-        bytes toHash = abi.encodePacked(nonce, bid);
+        bytes memory toHash = abi.encodePacked(nonce, bidAmt);
         bytes32 revealHash = keccak256(toHash);
+        closedBid memory closedBidOfSender = hashedBids[msg.sender];
         
-        if (revealHash == this.hashedBids[msg.sender]) {
-            // TODO: add to bidQueue
+        if (revealHash == closedBidOfSender.hash) {
+            openBid memory revealedBid = openBid(bidAmt, closedBidOfSender.time, msg.sender);
+            uint queueSize = bidQueue.length;
+            bool inserted = false;
+            openBid memory prevBid;
+            openBid memory temp;
+            
+            for (uint i = 0; i < queueSize; i++) {
+                openBid memory currBid = bidQueue[i];
+                if (inserted) {
+                    temp = prevBid;
+                    prevBid = currBid;
+                    bidQueue[i] = temp;
+                } else if ((bidAmt > currBid.amount) || ((bidAmt == currBid.amount) && (closedBidOfSender.time < currBid.time))) {
+                    prevBid = currBid;
+                    bidQueue[i] = revealedBid;
+                    inserted = true;
+                } else {
+                    // Does nothing
+                }
+            }
+            
+            if (!inserted) { // Adds revealed bid to queue if not yet added
+                bidQueue[queueSize] = revealedBid;
+            } else { // Else adds the last bid back to queue
+                bidQueue[queueSize] = prevBid;
+            }
+            
+            // Removes hashed bids from previous list to avoid sender revealing a valid bid more than once
+            delete hashedBids[msg.sender];
+            delete bidExists[msg.sender];
         }
     }
     
-    // TODO: to implement!
-    function reopenTender(string desc, uint biddingDuration, uint revelationDuration, uint depositAmount) public ownerOnly() {
+    // Finds out which is the highest valid bid
+    function endRevelation() public ownerOnly() onlyAfter(revelationEnd) {
+        if (bidQueue.length == 0) {
+            emit tenderEndsWithoutWinner();
+        } else {
+            openBid memory potentialWinningBid;
+            uint indexOfWinningBid = 0;
+            uint depositInWei = deposit * 1 ether;
+            while (!winnerExists && !(indexOfWinningBid >= bidQueue.length)) {
+                potentialWinningBid = bidQueue[indexOfWinningBid];
+                if ((potentialWinningBid.owner.balance - depositInWei) >= (potentialWinningBid.amount * 1 ether)) {
+                    winner = potentialWinningBid.owner;
+                    highestBid = potentialWinningBid.amount;
+                    winnerExists = true;
+                } else {
+                    indexOfWinningBid++;
+                }
+            }
+            
+            // Returns deposit to only bidders wiht valid losing bids
+            openBid memory losingBid;
+            for (uint i = indexOfWinningBid + 1; i < bidQueue.length; i++) {
+                losingBid = bidQueue[i];
+                if ((losingBid.owner.balance - depositInWei) >= (losingBid.amount * 1 ether)) {
+                    losingBid.owner.transfer(depositInWei);
+                }
+            }
+            
+            if (winnerExists) {
+                emit tenderEndsWithWinner(winner, highestBid);
+            } else {
+                emit tenderEndsWithoutWinner();
+            }
+        }
         
+        checkedByOwner = true;
     }
     
-    // TODO: to implement!
-    function endRevelation() public ownerOnly() {
-        
-    }    
+    // Changes the details of the Tender project
+    function reopenTender(string memory desc, uint biddingDuration, uint revelationDuration, uint depositAmount) public ownerOnly() {
+        projectDescription = desc;
+        biddingEnd = now + (biddingDuration * 1 minutes);
+        revelationEnd = biddingEnd + (revelationDuration * 1 minutes);
+        deposit = depositAmount;        
+    }
     
-    // TODO: implement function to retrieve results after ending of revelation, function to find out the current period {bidding,
-    // revelation, end}
+    // Gets the phase of the Tender bidding event
+    function getPhase() public view returns (string memory) {
+        if (now < biddingEnd) {
+            return 'Bidding Period';
+        } else if (now < revelationEnd) {
+            return 'Revelation Period';
+        } else {
+            return 'End';
+        }
+    }
+    
+    // Gets details about the Tender project
+    function getProjectDetails() public view returns (string memory, uint, uint, uint) {
+        return (projectDescription, deposit, biddingEnd, revelationEnd);
+    }
+    
+    // Gets the result after revelation period
+    function getResults() public view onlyAfter(revelationEnd) returns (address, uint) {
+        require(checkedByOwner);
+        return (winner, highestBid);
+    }
     
 }
