@@ -2,7 +2,7 @@ pragma solidity ^0.5.0;
 
 contract Tender {
     
-    address private owner;
+    address payable private owner;
     string private projectDescription;
     uint private deposit;
     uint private biddingEnd;
@@ -58,16 +58,18 @@ contract Tender {
         return bidExists[bidder];
     }
     
+    // Lets bidder submit hashed bids and ensures that bidders only make one bid each
     function makeBid(bytes32 hashedBid) public payable onlyBefore(biddingEnd) {
         if (hasBidBefore(msg.sender)) {
             hashedBids[msg.sender] = closedBid(hashedBid, now);
         } else {
-            require(msg.value > (deposit * 1 ether), "Deposit not enough to make a bid!");
+            require(msg.value == (deposit * 1 ether), "Deposit amount is incorrect!");
             hashedBids[msg.sender] = closedBid(hashedBid, now);
             bidExists[msg.sender] = true;
         }
     }
     
+    // Checks revealed bid and adds to priority queue
     function revealBid(uint nonce, uint bidAmt) public onlyAfter(biddingEnd) onlyBefore(revelationEnd) {
         require(hasBidBefore(msg.sender));
         
@@ -75,42 +77,44 @@ contract Tender {
         bytes32 revealHash = keccak256(toHash);
         closedBid memory closedBidOfSender = hashedBids[msg.sender];
         
-        if (revealHash == closedBidOfSender.hash) {
-            openBid memory revealedBid = openBid(bidAmt, closedBidOfSender.time, msg.sender);
-            uint queueSize = bidQueue.length;
-            bool inserted = false;
-            openBid memory prevBid;
-            openBid memory temp;
-            
-            for (uint i = 0; i < queueSize; i++) {
-                openBid memory currBid = bidQueue[i];
-                if (inserted) {
-                    temp = prevBid;
-                    prevBid = currBid;
-                    bidQueue[i] = temp;
-                } else if ((bidAmt > currBid.amount) || ((bidAmt == currBid.amount) && (closedBidOfSender.time < currBid.time))) {
-                    prevBid = currBid;
-                    bidQueue[i] = revealedBid;
-                    inserted = true;
-                } else {
-                    // Does nothing
-                }
+        require(revealHash == closedBidOfSender.hash, "Incorrect nonce and/or bid amount!");
+
+        openBid memory revealedBid = openBid(bidAmt, closedBidOfSender.time, msg.sender);
+        uint queueSize = bidQueue.length;
+        bool inserted = false;
+        openBid memory prevBid;
+        openBid memory temp;
+        
+        for (uint i = 0; i < queueSize; i++) {
+            openBid memory currBid = bidQueue[i];
+            if (inserted) {
+                temp = prevBid;
+                prevBid = currBid;
+                bidQueue[i] = temp;
+            } else if ((bidAmt > currBid.amount) || ((bidAmt == currBid.amount) && (closedBidOfSender.time < currBid.time))) {
+                prevBid = currBid;
+                bidQueue[i] = revealedBid;
+                inserted = true;
+            } else {
+                // Does nothing
             }
-            
-            if (!inserted) { // Adds revealed bid to queue if not yet added
-                bidQueue[queueSize] = revealedBid;
-            } else { // Else adds the last bid back to queue
-                bidQueue[queueSize] = prevBid;
-            }
-            
-            // Removes hashed bids from previous list to avoid sender revealing a valid bid more than once
-            delete hashedBids[msg.sender];
-            delete bidExists[msg.sender];
         }
+        
+        if (!inserted) { // Adds revealed bid to queue if not yet added
+            bidQueue.push(revealedBid);
+        } else { // Else adds the last bid back to queue
+            bidQueue.push(prevBid);
+        }
+        
+        // Removes hashed bids from previous list to avoid sender revealing a valid bid more than once
+        delete hashedBids[msg.sender];
+        delete bidExists[msg.sender];
+
     }
     
     // Finds out which is the highest valid bid
-    function endRevelation() public ownerOnly() onlyAfter(revelationEnd) {
+    function endRevelation() public ownerOnly onlyAfter(revelationEnd) {
+        require(!checkedByOwner);
         if (bidQueue.length == 0) {
             emit tenderEndsWithoutWinner();
         } else {
@@ -147,12 +151,19 @@ contract Tender {
         checkedByOwner = true;
     }
     
+    // Closes the tender
+    function close() public ownerOnly {
+        require(checkedByOwner);
+        selfdestruct(owner);
+    }
+    
     // Changes the details of the Tender project
-    function reopenTender(string memory desc, uint biddingDuration, uint revelationDuration, uint depositAmount) public ownerOnly() {
+    function reopenTender(string memory desc, uint biddingDuration, uint revelationDuration, uint depositAmount) public ownerOnly {
         projectDescription = desc;
         biddingEnd = now + (biddingDuration * 1 minutes);
         revelationEnd = biddingEnd + (revelationDuration * 1 minutes);
-        deposit = depositAmount;        
+        deposit = depositAmount;
+        checkedByOwner = false;
     }
     
     // Gets the phase of the Tender bidding event
