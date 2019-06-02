@@ -4,18 +4,23 @@ import {
   ContractData,
   ContractForm,
 } from "drizzle-react-components";
-
+import Header from "./layout/Header";
+import TenderComponent from "./components/TenderComponent";
+import SubmitTenderComponent from "./components/SubmitTenderComponent";
+import SubmitNounceComponent from "./components/SubmitNounceComponent";
+import ViewResultsComponent from "./components/ViewResultsComponent";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import logo from "./logo.png";
 
-export default ({ accounts }) => (
+export default () => (
   <div className="App">
-    <div>
-      <img src={logo} alt="drizzle-logo" />
-    </div>
-
-    <div className="section">
-      <h2>Active Account</h2>
-      <AccountData accountIndex="0" units="ether" precision="3" />
-    </div>
+    <Header />
+      <BrowserRouter>
+        <Route exact path="/" component = {TenderComponent} />
+        <Route exact path="/bid" component = {SubmitTenderComponent} />
+        <Route exact path="/nounce" component = {SubmitNounceComponent}/>
+        <Route exact path="/result" component = {ViewResultsComponent}/>
+      </BrowserRouter>
+      
   </div>
 );
