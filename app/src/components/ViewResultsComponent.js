@@ -8,7 +8,6 @@ export default() => (
                 <p>check your bidding results here</p>
                 <p>upon release of successful bid, your deposit will be refunded to you</p>
             </Paper>
-
             <p>form goes below...</p>
         </Box>
     </div>
