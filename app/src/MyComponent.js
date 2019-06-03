@@ -5,10 +5,10 @@ import {
   ContractForm,
 } from "drizzle-react-components";
 import Header from "./layout/Header";
-import TenderComponent from "./components/TenderComponent";
-import SubmitBidComponent from "./components/SubmitBidComponent";
-import SubmitNounceComponent from "./components/SubmitNounceComponent";
-import ViewResultsComponent from "./components/ViewResultsComponent";
+import TenderComponent from "./TenderComponent";
+import SubmitBidComponent from "./SubmitBidComponent";
+import SubmitNounceComponent from "./SubmitNounceComponent";
+import ViewResultsComponent from "./ViewResultsComponent";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import logo from "./logo.png";
 
