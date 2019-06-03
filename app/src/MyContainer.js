@@ -15,5 +15,3 @@ const mapStateToProps = state => {
 const MyContainer = drizzleConnect(MyComponent, mapStateToProps);
 
 export default MyContainer;
-
-//MyContainer

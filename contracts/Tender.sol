@@ -15,7 +15,6 @@ contract Tender {
     mapping(address => bool) bidExists;
     openBid[] private bidQueue;
     
-    
     event tenderEndsWithWinner(address winner, uint bid);
     event tenderEndsWithoutWinner();
 
