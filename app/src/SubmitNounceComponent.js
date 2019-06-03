@@ -6,6 +6,10 @@ class SubmitNounceComponent extends React.Component {
     state = {
         nounce: 0
     }
+
+    componentDidMount() {
+        
+    }
  
     onChange= (e) => this.setState({[e.target.name]: e.target.value});
 

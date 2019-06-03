@@ -6,12 +6,22 @@ import {
     ContractForm,
   } from "drizzle-react-components";
 
-export default() => (
-    <div className="ViewResultsComponent">
-        <Box py={6} px={10}>            
-            <Container>
-                <h3>Check your results here</h3>
-            </Container>
-        </Box>
-    </div>
-);
+class ViewResultsComponent extends React.Component{
+
+    componentDidMount() {
+        
+    }
+
+    render() {
+        return(
+            <div className="ViewResultsComponent">
+                <Box py={6} px={10}>            
+                    <Container>
+                        <h3>Check your results here</h3>
+                    </Container>
+                </Box>
+            </div>
+        )
+    }
+}
+export default ViewResultsComponent

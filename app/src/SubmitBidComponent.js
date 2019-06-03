@@ -18,6 +18,10 @@ class SubmitBidComponent extends React.Component {
         }
     }
 
+    componentDidMount() {
+        
+    }
+
     onChange = (e) => this.setState({[e.target.name]: e.target.value});
 
     addBid = (nounce, bidAmt) => {
