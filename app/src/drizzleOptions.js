@@ -9,6 +9,7 @@ const options = {
   contracts: [SimpleStorage, ComplexStorage, TutorialToken, Tender, HashGenerator],
   events: {
     SimpleStorage: ["StorageSet"],
+    Tender: ["tenderEndsWithoutWinner", "tenderEndsWithWinner"],
   },
   polls: {
     accounts: 1500,
