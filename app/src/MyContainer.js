@@ -6,9 +6,9 @@ const mapStateToProps = state => {
     accounts: state.accounts,
     SimpleStorage: state.contracts.SimpleStorage,
     TutorialToken: state.contracts.TutorialToken,
+    drizzleStatus: state.drizzleStatus,
     Tender: state.contracts.Tender,
     HashGenerator: state.contracts.HashGenerator,
-    drizzleStatus: state.drizzleStatus,
   };
 };
 

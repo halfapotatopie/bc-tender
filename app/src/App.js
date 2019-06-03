@@ -11,9 +11,9 @@ class App extends Component {
   render() {
     return (
       <DrizzleProvider options={drizzleOptions}>
-        <LoadingContainer>
+     
           <MyContainer />
-        </LoadingContainer>
+    
       </DrizzleProvider>
     );
   }
