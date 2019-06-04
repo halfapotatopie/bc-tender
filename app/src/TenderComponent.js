@@ -5,25 +5,7 @@ import logo from './logo.png';
 class TenderComponent extends React.Component {
     
     /* start incorrect JS code */
-    constructor (props) {
-        super(props)
-
-        this.state = {
-            currentPhase: ''
-        }
-
-        this.getPhase = this.getPhase.bind(this)
-    }
-
-    getPhase() {
-        const {getPhase} = this.props.state.contracts.Tender
-
-        getPhase ((err, phase) => {
-            if (err) console.error ('An error occured::::', err);
-            console.log ('Phase::::', phase);
-            this.setState({currentPhase: phase})
-        })
-    }
+    
     /* end incorrect JS code */
 
     render() {
