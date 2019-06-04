@@ -19,14 +19,14 @@ class SubmitBidComponent extends React.Component {
     }
 
     componentDidMount() {
-        
+
     }
 
     onChange = (e) => this.setState({[e.target.name]: e.target.value});
 
     addBid = (nounce, bidAmt) => {
         const newBid = {
-          nounce, 
+          nounce,
           bidAmt
         }
         this.setState({ bid: [newBid] });
@@ -37,12 +37,12 @@ class SubmitBidComponent extends React.Component {
         this.addBid(this.state.bidAmt, this.state.nounce)
         this.setState({bidAmt: '', nounce: ''}) //set bid back to nothing after submitted
     }
-    
+
     //code to push state to HashGenerator contract
 
     render() {
         return(
-            <div className="SubmitTenderComponent">
+            <div className="SubmitBidComponent">
                 <Box py={6} px={10}>
                     <h3>Submit your bid</h3>
                     <Container>
@@ -67,7 +67,7 @@ class SubmitBidComponent extends React.Component {
                                     />
                                 </div>
                                 <div className="col-3">
-                                <Button variant="contained" 
+                                <Button variant="contained"
                                         color="secondary"
                                         type="submit"
                                         value="submit">
@@ -76,11 +76,11 @@ class SubmitBidComponent extends React.Component {
                                 </div>
                             </div>
                         </form>
-                    </Container> 
+                    </Container>
                 </Box>
             </div>
         )
     }
 }
 
-export default SubmitBidComponent
+export default SubmitBidComponent;

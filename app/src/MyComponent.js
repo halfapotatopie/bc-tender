@@ -5,28 +5,41 @@ import {
   ContractForm,
 } from "drizzle-react-components";
 import Header from "./layout/Header";
-import TenderComponent from "./TenderComponent";
+import HomeComponent from "./HomeComponent";
 import SubmitBidComponent from "./SubmitBidComponent";
-import SubmitNounceComponent from "./SubmitNounceComponent";
-import ViewResultsComponent from "./ViewResultsComponent";
+import RevealBidComponent from "./RevealBidComponent";
+import ViewResultComponent from "./ViewResultComponent";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import logo from "./logo.png";
+import { getAllAccounts, getPhase } from "./utils";
 
 class MyComponent extends React.Component{
-  
+  constructor(props) {
+    super(props);
+    this.testGetAccounts = this.testGetAccounts.bind(this);
+  }
+
+  testGetAccounts() {
+    console.log(getAllAccounts());
+  }
+
+  componentDidMount() {
+    this.testGetAccounts();
+  }
+
   render() {
     return(
       <div className="App">
         <Header />
         <BrowserRouter>
-          <Route exact path="/" component = {TenderComponent} />
+          <Route exact path="/" component = {HomeComponent} />
           <Route exact path="/bid" component = {SubmitBidComponent} />
-          <Route exact path="/nounce" component = {SubmitNounceComponent}/>
-          <Route exact path="/result" component = {ViewResultsComponent}/>
+          <Route exact path="/nounce" component = {RevealBidComponent}/>
+          <Route exact path="/result" component = {ViewResultComponent}/>
         </BrowserRouter>
       </div>
     )
   }
 }
 
-export default MyComponent
+export default MyComponent;

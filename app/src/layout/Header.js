@@ -22,7 +22,7 @@ function Header() {
                     </Typography>
                     </Toolbar>
                 </AppBar>
-                
+
                 {/* tabs for submit bid, submit nounce, reveal results */}
                 <AppBar component="div" className="secondaryBar" position="static" elevation={0}>
                     <Route path="/"
@@ -30,18 +30,18 @@ function Header() {
                             <Fragment>
                                 <Tabs value={location.pathname}>
                                     <Tab icon={<MoneyIcon/>} className="tab" label="Submit Bid" href="/bid" />
-                                    <Tab icon={<SubmitIcon/>} className="tab" label="Submit Nounce" href="/nounce" />
-                                    <Tab icon={<ResultIcon/>} className="tab" label="Reveal Results" href="/result" >
+                                    <Tab icon={<SubmitIcon/>} className="tab" label="Reveal Bid" href="/reveal" />
+                                    <Tab icon={<ResultIcon/>} className="tab" label="View Result" href="/result" >
                                     </Tab>
                                 </Tabs>
                             </Fragment>
                         )}
                     />
                 </AppBar>
-                
+
             </div>
         </BrowserRouter>
-    )    
+    )
 }
 
 export default Header
