@@ -4,6 +4,7 @@ import logo from './logo.png';
 
 class TenderComponent extends React.Component {
     
+    /* start incorrect JS code */
     constructor (props) {
         super(props)
 
@@ -23,6 +24,7 @@ class TenderComponent extends React.Component {
             this.setState({currentPhase: phase})
         })
     }
+    /* end incorrect JS code */
 
     render() {
         return(
