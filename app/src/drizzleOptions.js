@@ -7,7 +7,7 @@ import HashGenerator from "./contracts/HashGenerator.json";
 const options = {
   //need to add tender, hashgenerator into contracts... but cannot be empty
   contracts: [SimpleStorage, ComplexStorage, TutorialToken, Tender, HashGenerator],
-  events: {
+  events: { 
     SimpleStorage: ["StorageSet"],
     Tender: ["tenderEndsWithoutWinner", "tenderEndsWithWinner"],
   },
