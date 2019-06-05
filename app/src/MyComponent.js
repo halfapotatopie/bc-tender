@@ -9,9 +9,8 @@ import HomeComponent from "./HomeComponent";
 import SubmitBidComponent from "./SubmitBidComponent";
 import RevealBidComponent from "./RevealBidComponent";
 import ViewResultComponent from "./ViewResultComponent";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import logo from "./logo.png";
-import { getAllAccounts, getPhase } from "./utils";
+import { BrowserRouter, Route } from "react-router-dom";
+import { getAllAccounts, getPhase } from "./util";
 
 class MyComponent extends React.Component{
   constructor(props) {

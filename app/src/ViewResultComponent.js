@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Container, Card, CardContent } from '@material-ui/core';
+import { Box, Container } from '@material-ui/core';
 import {
     AccountData,
     ContractData,
