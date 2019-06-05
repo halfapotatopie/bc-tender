@@ -10,20 +10,14 @@ import SubmitBidComponent from "./SubmitBidComponent";
 import RevealBidComponent from "./RevealBidComponent";
 import ViewResultComponent from "./ViewResultComponent";
 import { BrowserRouter, Route } from "react-router-dom";
-import { getAllAccounts, getPhase } from "./util";
 
 class MyComponent extends React.Component{
   constructor(props) {
     super(props);
-    this.testGetAccounts = this.testGetAccounts.bind(this);
-  }
-
-  testGetAccounts() {
-    console.log(getAllAccounts());
   }
 
   componentDidMount() {
-    this.testGetAccounts();
+
   }
 
   render() {
