@@ -3,7 +3,7 @@ import { Box, Typography, Container, Card, CardContent } from '@material-ui/core
 import {
     AccountData,
     ContractData,
-    ContractForm,
+    ContractForm
   } from "drizzle-react-components";
 
 class ViewResultComponent extends React.Component{

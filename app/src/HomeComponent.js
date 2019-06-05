@@ -18,7 +18,7 @@ class HomeComponent extends React.Component {
                             to Drizzle Tender App
                         </Typography>
                         <Typography component="p">
-                            This is a blockchain application to manage your tenders
+                            This is a blockchain application for tender processes!
                         </Typography>
                 </Box>
         </div>

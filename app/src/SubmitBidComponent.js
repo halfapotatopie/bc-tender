@@ -4,7 +4,7 @@ import { Box, Typography, Divider, Container, TextField, Paper, Button } from '@
 import {
     AccountData,
     ContractData,
-    ContractForm,
+    ContractForm
 } from "drizzle-react-components";
 
 const API = 'http://localhost:3000/bid'

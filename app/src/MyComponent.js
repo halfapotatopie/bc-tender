@@ -2,7 +2,7 @@ import React from "react";
 import {
   AccountData,
   ContractData,
-  ContractForm,
+  ContractForm
 } from "drizzle-react-components";
 import Header from "./layout/Header";
 import HomeComponent from "./HomeComponent";

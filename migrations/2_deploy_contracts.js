@@ -1,6 +1,3 @@
-const SimpleStorage = artifacts.require("SimpleStorage");
-const TutorialToken = artifacts.require("TutorialToken");
-const ComplexStorage = artifacts.require("ComplexStorage");
 const Tender = artifacts.require("Tender");
 const HashGenerator = artifacts.require("HashGenerator");
 const Web3 = require('web3');
@@ -11,9 +8,6 @@ module.exports = async function(deployer) {
   let accounts = await web3.eth.getAccounts();
   let owner = accounts[0];
 
-  deployer.deploy(SimpleStorage);
-  deployer.deploy(TutorialToken);
-  deployer.deploy(ComplexStorage);
   deployer.deploy(HashGenerator);
-  deployer.deploy(Tender, {from: owner}, 'Write your project description', 2, 2, 1);
+  deployer.deploy(Tender, {from: owner}, 'Sample project description', 2, 2, 1);
 };
