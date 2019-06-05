@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Typography, Divider, Container, TextField, Paper, Button } from '@material-ui/core';
+import { Box, Container, TextField, Button } from '@material-ui/core';
 import {
     AccountData,
     ContractData,

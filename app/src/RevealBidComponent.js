@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Box, Typography, Divider, Container, TextField, Paper, Button } from '@material-ui/core';
+import { Box, Container, TextField, Button } from '@material-ui/core';
 
 class RevealBidComponent extends React.Component {
 
