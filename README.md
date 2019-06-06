@@ -4,6 +4,7 @@ Drizzle
 
 Works best Node.js v11.
 I really don't know about v12 :/
+- probably will encounter installation issues
 
 How to get front end to show up:
 1. Open Ganache workspace
