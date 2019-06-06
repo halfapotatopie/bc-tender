@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Box, Container, TextField, Button } from '@material-ui/core';
+// import PropTypes from 'prop-types';
+import { Box, Container, TextField } from '@material-ui/core';
 import { Button, Form, Input, notification, Select } from 'antd';
 import {
     AccountData,
@@ -51,7 +51,7 @@ class SubmitBidComponent extends React.Component {
     checkPhase() {
       getPhase()
       .then(phase => {
-        if (phase === "Bidding Period") {
+        if (phase === "Bidding") {
           this.setState({
             validPhase: true
           });
