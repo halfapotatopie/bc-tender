@@ -9,5 +9,5 @@ module.exports = async function(deployer) {
   let owner = accounts[0];
 
   deployer.deploy(HashGenerator);
-  deployer.deploy(Tender, {from: owner}, 'Sample project description', 2, 2, 1);
+  deployer.deploy(Tender, {from: owner}, 'Sample project description', 20, 2, 1);
 };

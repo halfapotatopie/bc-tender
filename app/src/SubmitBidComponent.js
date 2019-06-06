@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Box, Container, TextField, Button } from '@material-ui/core';
+import { Box, Container, TextField } from '@material-ui/core';
 import { Button, Form, Input, notification, Select } from 'antd';
+
 import {
     AccountData,
     ContractData,
@@ -51,16 +52,20 @@ class SubmitBidComponent extends React.Component {
     checkPhase() {
       getPhase()
       .then(phase => {
+        console.log(phase);
+        console.log(typeof phase);
         if (phase === "Bidding Period") {
           this.setState({
             validPhase: true
           });
         } else {
+          console.log("error is here");
           this.setState({
             validPhase: false
           });
         }
       }).catch(error => {
+        console.log(error);
         this.setState({
           validPhase: false
         });
@@ -187,6 +192,9 @@ class SubmitBidComponent extends React.Component {
     // TODO: display project details, reorganise stuff and change styling if needed
     // need to check if bid amount is more than depositAmount (change solidity?)
     render() {
+      console.log(this.state.validPhase);
+      console.log(this.state.detailsLoaded);
+      console.log(this.state.accountsLoaded);
       if (this.state.validPhase && this.state.detailsLoaded && this.state.accountsLoaded) {
         return (
             <div className="SubmitBidComponent">
@@ -195,9 +203,7 @@ class SubmitBidComponent extends React.Component {
                     <Container>
                       <Form labelCol={{ span: 5 }} wrapperCol={{ span: 12 }} onSubmit={this.handleSubmit}>
                         <Form.Item label="Account">
-                          {getFieldDecorator('account', {
-                            rules: [{ required: true, message: 'Please select your account!' }],
-                          })(
+                          
                             <Select
                             showSearch
                             style={{ width: 200 }}
@@ -212,7 +218,7 @@ class SubmitBidComponent extends React.Component {
                                 <Option key={value}>{value}</Option>
                               ))}
                             </Select>
-                          )}
+      
                         </Form.Item>
                         <Form.Item
                           label="Nonce"
@@ -265,6 +271,7 @@ class SubmitBidComponent extends React.Component {
       } else { // return a page that says invalid phase
         return (
           <div>
+            Bidding Phase has ended!
           </div>
         );
       }
