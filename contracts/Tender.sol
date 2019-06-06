@@ -53,6 +53,10 @@ contract Tender {
         _;
     }
 
+    function test() public pure returns (bool) {
+      return true;
+    }
+
     function hasBidBefore(address bidder) private view returns (bool) {
         return bidExists[bidder];
     }

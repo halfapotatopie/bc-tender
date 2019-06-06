@@ -1,10 +1,10 @@
 import React from 'react';
 import { Box, Container } from '@material-ui/core';
-import {
-    AccountData,
-    ContractData,
-    ContractForm
-  } from "drizzle-react-components";
+// import {
+//     AccountData,
+//     ContractData,
+//     ContractForm
+//   } from "drizzle-react-components";
 
 class ViewResultComponent extends React.Component{
 

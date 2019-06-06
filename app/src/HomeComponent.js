@@ -2,6 +2,8 @@ import React from 'react';
 import { Box, Paper, Typography, Divider, Button } from '@material-ui/core';
 import logo from './logo.png';
 
+const displayText = "This is a blockchain application for tender processes!";
+
 class HomeComponent extends React.Component {
 
     render() {
@@ -15,10 +17,10 @@ class HomeComponent extends React.Component {
                             Welcome
                         </Typography>
                         <Typography variant="h6" component="h6">
-                            to Drizzle Tender App
+                            to Tender App
                         </Typography>
                         <Typography component="p">
-                            This is a blockchain application for tender processes!
+                            {displayText}
                         </Typography>
                 </Box>
         </div>

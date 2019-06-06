@@ -1,11 +1,11 @@
 import React from 'react';
 import { Box, Container, TextField } from '@material-ui/core';
 import { Button, Form, Input, notification, Select } from 'antd';
-import {
-    AccountData,
-    ContractData,
-    ContractForm
-} from "drizzle-react-components";
+// import {
+//     AccountData,
+//     ContractData,
+//     ContractForm
+// } from "drizzle-react-components";
 import { getAllAccounts, getPhase, getProjectDetails, revealBid } from "./util";
 
 const { Option } = Select;
@@ -192,7 +192,7 @@ class RevealBidComponent extends React.Component {
                     <Container>
                       <Form labelCol={{ span: 5 }} wrapperCol={{ span: 12 }} onSubmit={this.handleSubmit}>
                         <Form.Item label="Account">
-                          
+
                             <Select
                             showSearch
                             style={{ width: 200 }}

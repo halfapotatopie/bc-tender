@@ -66,3 +66,14 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### Flow to set up:
+
+First, 'truffle compile' in "bc-tender" folder.
+Next, open up ganache and make sure it is on "localhost:8545".
+Then, open up remix.
+Copy Tender.sol and HashGenerator.sol from "bc-tender/contracts" and paste into remix.
+Compile and deploy each.
+Copy the address of each and paste over the respective arguments on lines 11 and 13 of "bc-tender/app/src/util.js"
+npm install in app
+And npm run start

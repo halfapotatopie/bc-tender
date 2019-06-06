@@ -2,13 +2,13 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import { Box, Container, TextField } from '@material-ui/core';
 import { Button, Form, Input, notification, Select } from 'antd';
-
-import {
-    AccountData,
-    ContractData,
-    ContractForm
-} from "drizzle-react-components";
-import { getAllAccounts, getPhase, getProjectDetails, getHash, submitHashedBid } from "./util";
+//
+// import {
+//     AccountData,
+//     ContractData,
+//     ContractForm
+// } from "drizzle-react-components";
+import { getAllAccounts, getPhase, getProjectDetails, getHash, submitHashedBid, test } from "./util";
 
 const { Option } = Select;
 const NONNEGINT_REGEX = RegExp('^[1-9]+[0-9]*$|^0$');
@@ -47,12 +47,22 @@ class SubmitBidComponent extends React.Component {
       this.validateNonce = this.validateNonce.bind(this);
       this.validateAmount = this.validateAmount.bind(this);
       this.isFormValid = this.isFormValid.bind(this);
+      this.sureTest = this.sureTest.bind(this);
+    }
+
+    sureTest() {
+      test().then(res => {
+        console.log("This should work");
+        console.log(res);
+      });
     }
 
     checkPhase() {
       getPhase()
       .then(phase => {
+        console.log("After getting phase");
         console.log(phase);
+        console.log("Above is phase");
         if (phase === "Bidding") {
           this.setState({
             validPhase: true
@@ -74,6 +84,8 @@ class SubmitBidComponent extends React.Component {
     loadProjectDetails() {
       getProjectDetails()
       .then(details => {
+        console.log("details:");
+        console.log(details);
         this.setState({
           projectDetails: details,
           detailsLoaded: true
@@ -184,6 +196,7 @@ class SubmitBidComponent extends React.Component {
       this.checkPhase();
       this.loadProjectDetails();
       this.loadAccounts();
+      this.sureTest();
     }
 
 
@@ -191,10 +204,8 @@ class SubmitBidComponent extends React.Component {
     // TODO: display project details, reorganise stuff and change styling if needed
     // need to check if bid amount is more than depositAmount (change solidity?)
     render() {
-      console.log(this.state.validPhase);
-      console.log(this.state.detailsLoaded);
-      console.log(this.state.accountsLoaded);
       if (this.state.validPhase && this.state.detailsLoaded && this.state.accountsLoaded) {
+        // TODO: Display project details (get from this.state.projectDetails)
         return (
             <div className="SubmitBidComponent">
                 <Box py={6} px={10}>
@@ -257,7 +268,7 @@ class SubmitBidComponent extends React.Component {
                 </Box>
             </div>
         );
-      } else if (this.state.validPhase && this.state.detailsLoaded) { // return a page with just details
+      } else if (this.state.validPhase && this.state.detailsLoaded) { // return a page with just project details
         return (
           <div>
           </div>
@@ -268,6 +279,7 @@ class SubmitBidComponent extends React.Component {
           </div>
         );
       } else { // return a page that says invalid phase
+        console.log(this.state.accounts);
         return (
           <div>
             Bidding Phase has ended!
