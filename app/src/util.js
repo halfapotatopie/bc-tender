@@ -29,6 +29,8 @@ export async function getHash(nonce, amount) {
 export async function getPhase() {
   try {
     let phase = await Tender.methods.getPhase().call();
+    console.log("this is in util");
+    console.log(phase);
     return phase;
   } catch(err) {
     throw err;
