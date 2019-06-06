@@ -51,6 +51,7 @@ class SubmitBidComponent extends React.Component {
     checkPhase() {
       getPhase()
       .then(phase => {
+        console.log(phase);
         if (phase === "Bidding") {
           this.setState({
             validPhase: true
