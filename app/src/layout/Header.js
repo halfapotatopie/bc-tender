@@ -18,12 +18,12 @@ function Header() {
                     <Toolbar>
                     {/* name + logo (do later) */}
                     <Typography variant="h5" className="title">
-                        Drizzle Tender App
+                        Tender App
                     </Typography>
                     </Toolbar>
                 </AppBar>
 
-                {/* tabs for submit bid, submit nounce, reveal results */}
+                {/* tabs for submit bid, submit nonce, reveal results */}
                 <AppBar component="div" className="secondaryBar" position="static" elevation={0}>
                     <Route path="/"
                         render={({ location }) => (

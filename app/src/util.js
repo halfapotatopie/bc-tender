@@ -4,31 +4,22 @@ const web3 = new Web3('http://localhost:3000', null, {});   //set ethereum node 
 
 //setup contract object
 const HashGeneratorJson = require("./contracts/HashGenerator.json");
-const hgChainId = Object.keys(HashGeneratorJson.networks)[0];
+// const hgChainId = Object.keys(HashGeneratorJson.networks)[0];
 const TenderJson = require("./contracts/Tender.json");  //set ABI output from truffle
-const tChainId = Object.keys(TenderJson.networks)[0]; //picks the first deployed network
+// const tChainId = Object.keys(TenderJson.networks)[0]; //picks the first deployed network
                                                             //make sure this is the right deployed network
-const HashGenerator = new web3.eth.Contract(HashGeneratorJson.abi, HashGeneratorJson.networks[hgChainId].address); // Copy address of contract deployed on remix and replace this address
+const HashGenerator = new web3.eth.Contract(HashGeneratorJson.abi, "0x8fa32c37b04f76a7e14837a311b1ab6f08ebabf8"); // Copy address of contract deployed on remix and replace this address
 // const Tender = new web3.eth.Contract(TenderJson.abi, TenderJson.networks[tChainId].address);
-const Tender = new web3.eth.Contract(TenderJson.abi, "0x114e928b0bb5d0e4ced9954f6a4c703cc6156f1e"); // Copy address of contract deployed on remix and replace this address
+const Tender = new web3.eth.Contract(TenderJson.abi, "0xd80b950f1c1b666e92882b51811e48fe4ec5aec7"); // Copy address of contract deployed on remix and replace this address
 
-export function test() {
-  Tender.methods.test().call({from: "0x9fE09aC44EB64321287Ed1a57198f248BBaF6b96", to: TenderJson.networks[tChainId].address}).then( (err, rsl) => {
-    console.log("d123 ",err, rsl)
-  });
-  return Tender.methods.test().call();
-};
 
 export function getAllAccounts() {
-  // let accounts = await web3.eth.getAccounts();
-  // return accounts;
   return web3.eth.getAccounts();
 };
 
-export async function getHash(nonce, amount) {
+export function getHash(nonce, amount) {
   try {
-    let hash = await HashGenerator.methods.generateHash(nonce, amount).call();
-    return hash;
+    return HashGenerator.methods.generateHash(nonce, amount).call();
   } catch(err) {
     throw err;
   }
@@ -42,51 +33,41 @@ export function getPhase() {
   }
 };
 
-// export function getPhase() {
-//   Tender.methods.getPhase().call()
-//   .then(phase => {
-//     return phase;
-//   });
-// };
-
-export async function submitHashedBid(account, hash) {
+export function submitHashedBid(account, hash) {
   try {
-    let action = await Tender.methods.makeBid(hash).send({from: account});
-    return;
+    return Tender.methods.makeBid(hash).send({from: account});
   } catch(err) {
     throw err;
   }
 };
 
-export async function revealBid(account, nonce, amount) {
+export function revealBid(account, nonce, amount) {
   try {
-    let action = await Tender.methods.revealBid(nonce, amount).send({from: account});
-    return;
+    return Tender.methods.revealBid(nonce, amount).send({from: account});
   } catch(err) {
     throw err;
   }
 };
 
-export async function endRevelation(account) {
+export function endRevelation(account) {
   try {
-    let action = await Tender.methods.endRevelation().send({from: account});
+    return Tender.methods.endRevelation().send({from: account});
   } catch(err) {
     throw err;
   }
 };
 
-export async function closeContract(account) {
+export function closeContract(account) {
   try {
-    let action = await Tender.methods.close().send({from: account});
+    return Tender.methods.close().send({from: account});
   } catch(err) {
     throw err;
   }
 };
 
-export async function reopenTender(account, desc, biddingDuration, revelationDuration, depositAmount) {
+export function reopenTender(account, desc, biddingDuration, revelationDuration, depositAmount) {
   try {
-    let action = await Tender.methods.reopenTender(desc, biddingDuration, revelationDuration,depositAmount).send({from: account});
-    return;
+    return Tender.methods.reopenTender(desc, biddingDuration, revelationDuration,depositAmount).send({from: account});
   } catch(err) {
     throw err;
   }
@@ -100,10 +81,9 @@ export function getProjectDetails() {
   }
 };
 
-export async function getResult() {
+export function getResult() {
   try {
-    let result = await Tender.methods.getResults().call();
-    return result;
+    return Tender.methods.getResults().call();
   } catch(err) {
     throw err;
   }

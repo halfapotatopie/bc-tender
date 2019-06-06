@@ -1,9 +1,4 @@
 import React from "react";
-// import {
-//   AccountData,
-//   ContractData,
-//   ContractForm
-// } from "drizzle-react-components";
 import Header from "./layout/Header";
 import HomeComponent from "./HomeComponent";
 import SubmitBidComponent from "./SubmitBidComponent";

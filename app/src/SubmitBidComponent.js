@@ -2,25 +2,22 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import { Box, Container, TextField } from '@material-ui/core';
 import { Button, Form, Input, notification, Select } from 'antd';
-//
-// import {
-//     AccountData,
-//     ContractData,
-//     ContractForm
-// } from "drizzle-react-components";
+
 import { getAllAccounts, getPhase, getProjectDetails, getHash, submitHashedBid, test } from "./util";
 
 const { Option } = Select;
 const NONNEGINT_REGEX = RegExp('^[1-9]+[0-9]*$|^0$');
 const POSINT_REGEX = RegExp('^[1-9]+[0-9]*$');
-const deposit = 1; // to remove
 
 class SubmitBidComponent extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
         validPhase: false,
-        projectDetails: {},
+        detailsDescription: "",
+        detailsDeposit: 0,
+        detailsBidEnd: 0,
+        detailsRevealEnd: 0,
         detailsLoaded: false,
         accounts: [],
         accountsLoaded: false,
@@ -47,28 +44,17 @@ class SubmitBidComponent extends React.Component {
       this.validateNonce = this.validateNonce.bind(this);
       this.validateAmount = this.validateAmount.bind(this);
       this.isFormValid = this.isFormValid.bind(this);
-      this.sureTest = this.sureTest.bind(this);
     }
 
-    sureTest() {
-      test().then(res => {
-        console.log("This should work");
-        console.log(res);
-      });
-    }
 
     checkPhase() {
       getPhase()
       .then(phase => {
-        console.log("After getting phase");
-        console.log(phase);
-        console.log("Above is phase");
         if (phase === "Bidding") {
           this.setState({
             validPhase: true
           });
         } else {
-          console.log("error is here");
           this.setState({
             validPhase: false
           });
@@ -84,15 +70,24 @@ class SubmitBidComponent extends React.Component {
     loadProjectDetails() {
       getProjectDetails()
       .then(details => {
-        console.log("details:");
-        console.log(details);
         this.setState({
-          projectDetails: details,
+          detailsDescription: details[0],
+          detailsDeposit: parseInt(details[1], 16),
+          detailsBidEnd: new Date(parseInt(details[2], 16)),
+          detailsRevealEnd: new Date(parseInt(details[3], 16)),
           detailsLoaded: true
         });
+        console.log("updated details:");
+        console.log(this.state.detailsDescription);
+        console.log(this.state.detailsDeposit);
+        console.log(this.state.detailsBidEnd);
+        console.log(this.state.detailsRevealEnd);
       }).catch(error => {
         this.setState({
-          projectDetails: {},
+          detailsDescription: "",
+          detailsDeposit: 0,
+          detailsBidEnd: 0,
+          detailsRevealEnd: 0,
           detailsLoaded: false
         })
       });
@@ -173,7 +168,7 @@ class SubmitBidComponent extends React.Component {
           errorMsg: "Amount should be a positive integer!"
         };
       }
-      if (amount < deposit) { // to change deposit to refer to deposit from contract
+      if (amount < this.state.detailsDeposit) {
         return {
           validateStatus: "error",
           errorMsg: "Amount should be at least the same as deposit!"
@@ -196,7 +191,6 @@ class SubmitBidComponent extends React.Component {
       this.checkPhase();
       this.loadProjectDetails();
       this.loadAccounts();
-      this.sureTest();
     }
 
 
