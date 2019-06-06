@@ -192,9 +192,7 @@ class RevealBidComponent extends React.Component {
                     <Container>
                       <Form labelCol={{ span: 5 }} wrapperCol={{ span: 12 }} onSubmit={this.handleSubmit}>
                         <Form.Item label="Account">
-                          {getFieldDecorator('account', {
-                            rules: [{ required: true, message: 'Please select your account!' }],
-                          })(
+                          
                             <Select
                             showSearch
                             style={{ width: 200 }}
@@ -209,7 +207,7 @@ class RevealBidComponent extends React.Component {
                                 <Option key={value}>{value}</Option>
                               ))}
                             </Select>
-                          )}
+                          }
                         </Form.Item>
                         <Form.Item
                           label="Nonce"
