@@ -12,9 +12,11 @@
 
 .tab:hover{
     background-color: #f73378;
+    color: #fff;
 }
 
 .title{
     flex-grow: 1;
+    color: #fff;
 }
 

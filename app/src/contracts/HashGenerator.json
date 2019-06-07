@@ -31,15 +31,15 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[{\"name\":\"nonce\",\"type\":\"uint256\"},{\"name\":\"bidAmt\",\"type\":\"uint256\"}],\"name\":\"generateHash\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/ley/Desktop/SMU_project/bc-tender/contracts/HashGenerator.sol\":\"HashGenerator\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/ley/Desktop/SMU_project/bc-tender/contracts/HashGenerator.sol\":{\"keccak256\":\"0x50da85c0b157d6ef4a2add5ca9720e50fdc2d97e27f5d8c9342c4bfc7ce9a0b7\",\"urls\":[\"bzzr://5d3bbd78c7d6922fda409ad98acf441a34acbdd6a36fa0910dd301222b69527c\"]}},\"version\":1}",
-  "bytecode": "0x608060405234801561001057600080fd5b5060e78061001f6000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c8063324a7d3414602d575b600080fd5b606060048036036040811015604157600080fd5b8101908080359060200190929190803590602001909291905050506076565b6040518082815260200191505060405180910390f35b6000606083836040516020018083815260200182815260200192505050604051602081830303815290604052905060008180519060200120905080925050509291505056fea165627a7a7230582033fe2ab4edede537a951ce8f4aa01f716093e261d5cb9a8601ab8ab8a94b11060029",
-  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c8063324a7d3414602d575b600080fd5b606060048036036040811015604157600080fd5b8101908080359060200190929190803590602001909291905050506076565b6040518082815260200191505060405180910390f35b6000606083836040516020018083815260200182815260200192505050604051602081830303815290604052905060008180519060200120905080925050509291505056fea165627a7a7230582033fe2ab4edede537a951ce8f4aa01f716093e261d5cb9a8601ab8ab8a94b11060029",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.0+commit.1d4f565a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[{\"name\":\"nonce\",\"type\":\"uint256\"},{\"name\":\"bidAmt\",\"type\":\"uint256\"}],\"name\":\"generateHash\",\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\"}],\"payable\":false,\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/raine/Documents/GitHub/bc-tender/contracts/HashGenerator.sol\":\"HashGenerator\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/raine/Documents/GitHub/bc-tender/contracts/HashGenerator.sol\":{\"keccak256\":\"0x50da85c0b157d6ef4a2add5ca9720e50fdc2d97e27f5d8c9342c4bfc7ce9a0b7\",\"urls\":[\"bzzr://5d3bbd78c7d6922fda409ad98acf441a34acbdd6a36fa0910dd301222b69527c\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5061010a806100206000396000f3fe608060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063324a7d34146044575b600080fd5b348015604f57600080fd5b50608360048036036040811015606457600080fd5b8101908080359060200190929190803590602001909291905050506099565b6040518082815260200191505060405180910390f35b6000606083836040516020018083815260200182815260200192505050604051602081830303815290604052905060008180519060200120905080925050509291505056fea165627a7a72305820dc630b0dbf08a774aa2df181cac6fb2635eb3a587f2863a68f0168c0035237770029",
+  "deployedBytecode": "0x608060405260043610603f576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063324a7d34146044575b600080fd5b348015604f57600080fd5b50608360048036036040811015606457600080fd5b8101908080359060200190929190803590602001909291905050506099565b6040518082815260200191505060405180910390f35b6000606083836040516020018083815260200182815260200192505050604051602081830303815290604052905060008180519060200120905080925050509291505056fea165627a7a72305820dc630b0dbf08a774aa2df181cac6fb2635eb3a587f2863a68f0168c0035237770029",
   "sourceMap": "25:285:0:-;;;59:29;8:9:-1;5:2;;;30:1;27;20:12;5:2;59:29:0;25:285;;;;;;",
-  "deployedSourceMap": "25:285:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;25:285:0;;;;;;;;;;;;;;;;;;;98:210;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;98:210:0;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;166:7;185:19;224:5;231:6;207:31;;;;;;;;;;;;;;;;;;;;;49:4:-1;39:7;30;26:21;22:32;13:7;6:49;207:31:0;;;185:53;;248:12;273:6;263:17;;;;;;248:32;;297:4;290:11;;;;98:210;;;;:::o",
+  "deployedSourceMap": "25:285:0:-;;;;;;;;;;;;;;;;;;;;;;;;98:210;;8:9:-1;5:2;;;30:1;27;20:12;5:2;98:210:0;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;98:210:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;166:7;185:19;224:5;231:6;207:31;;;;;;;;;;;;;;;;;;;;;49:4:-1;39:7;30;26:21;22:32;13:7;6:49;207:31:0;;;185:53;;248:12;273:6;263:17;;;;;;248:32;;297:4;290:11;;;;98:210;;;;:::o",
   "source": "pragma solidity ^0.5.0;\n\ncontract HashGenerator {\n    \n    constructor() public {\n\n    }\n    \n    function generateHash(uint nonce, uint bidAmt) public pure returns (bytes32) {\n        bytes memory toHash = abi.encodePacked(nonce, bidAmt);\n        bytes32 hash = keccak256(toHash);\n        return hash;\n    }\n}\n",
-  "sourcePath": "/home/ley/Desktop/SMU_project/bc-tender/contracts/HashGenerator.sol",
+  "sourcePath": "/Users/raine/Documents/GitHub/bc-tender/contracts/HashGenerator.sol",
   "ast": {
-    "absolutePath": "/home/ley/Desktop/SMU_project/bc-tender/contracts/HashGenerator.sol",
+    "absolutePath": "/Users/raine/Documents/GitHub/bc-tender/contracts/HashGenerator.sol",
     "exportedSymbols": {
       "HashGenerator": [
         32
@@ -190,7 +190,7 @@
                         "name": "abi",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 728,
+                        "referencedDeclaration": 767,
                         "src": "207:3:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_abi",
@@ -289,7 +289,7 @@
                       "name": "keccak256",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 735,
+                      "referencedDeclaration": 774,
                       "src": "263:9:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
@@ -447,7 +447,7 @@
     "src": "0:311:0"
   },
   "legacyAST": {
-    "absolutePath": "/home/ley/Desktop/SMU_project/bc-tender/contracts/HashGenerator.sol",
+    "absolutePath": "/Users/raine/Documents/GitHub/bc-tender/contracts/HashGenerator.sol",
     "exportedSymbols": {
       "HashGenerator": [
         32
@@ -598,7 +598,7 @@
                         "name": "abi",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 728,
+                        "referencedDeclaration": 767,
                         "src": "207:3:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_abi",
@@ -697,7 +697,7 @@
                       "name": "keccak256",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 735,
+                      "referencedDeclaration": 774,
                       "src": "263:9:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
@@ -856,7 +856,7 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.5.8+commit.23d335f2.Emscripten.clang"
+    "version": "0.5.0+commit.1d4f565a.Emscripten.clang"
   },
   "networks": {
     "5777": {
@@ -866,8 +866,8 @@
       "transactionHash": "0x9a871c554be5f26989752b9bc685288eba457859534f50ebdab17395d6f5218e"
     }
   },
-  "schemaVersion": "3.0.10",
-  "updatedAt": "2019-06-06T17:42:40.957Z",
+  "schemaVersion": "3.0.9",
+  "updatedAt": "2019-06-07T01:25:18.542Z",
   "devdoc": {
     "methods": {}
   },

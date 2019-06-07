@@ -14,15 +14,6 @@ function Header() {
     return (
         <BrowserRouter>
             <div>
-                <AppBar position='static' className="bar">
-                    <Toolbar>
-                    {/* name + logo (do later) */}
-                    <Typography variant="h5" className="title">
-                        Tender App
-                    </Typography>
-                    </Toolbar>
-                </AppBar>
-
                 {/* tabs for submit bid, submit nonce, reveal results */}
                 <AppBar component="div" className="secondaryBar" position="static" elevation={0}>
                     <Route path="/"
