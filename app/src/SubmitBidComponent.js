@@ -130,19 +130,21 @@ class SubmitBidComponent extends React.Component {
 
     handleSubmit(event) {
       event.preventDefault();
+      /*
       if (!this.state.validForm) {
         notification.error({
           message: "Error",
           description: "Make sure all fields are filled in correctly!"
         });
         return;
-      }
+      }*/
       getHash(this.state.nonce.value, this.state.bidAmount.value)
       .then(hash => {
         console.log("hash:");
         console.log(hash);
         return submitHashedBid(this.state.chosenAccount, hash, this.state.detailsDeposit);
-      }).then(res => {
+      })
+      /*.then(res => {
         notification.success({
           message: "Success",
           description: "Submitted hashed bid successfully!"
@@ -153,7 +155,7 @@ class SubmitBidComponent extends React.Component {
           message: "Error",
           description: "Unable to submit hashed bid!"
         });
-      });
+      });*/
     }
 
     validateNonce(nonce) {

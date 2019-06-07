@@ -146,6 +146,9 @@ class RevealBidComponent extends React.Component {
       }*/
       revealBid(this.state.chosenAccount,this.state.nonce.value, this.state.bidAmount.value)
       console.log("submitted")
+      console.log(this.state.chosenAccount)
+      console.log(this.state.nonce.value)
+      console.log(this.state.bidAmount.value)
       /*.then(res => {
         notification.success({
           message: "Success",
