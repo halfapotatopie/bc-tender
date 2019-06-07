@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Container, Paper } from '@material-ui/core';
-import { Button, Form, Input, notification, Select, Divider } from 'antd';
+import { Box, Container, Paper, Button} from '@material-ui/core';
+import { Form, Input, notification, Select, Divider } from 'antd';
 import { getAllAccounts, getPhase, reopenTender,
          closeContract, endRevelation, hasBeenChecked,
          hasWinner, getResult } from "./util";
@@ -113,13 +113,13 @@ class ViewResultComponent extends React.Component {
 
     generateResult(event) {
       event.preventDefault();
-      if (!this.state.accountChosen) {
+      /*if (!this.state.accountChosen) {
         notification.error({
           message: "Error",
           description: "Make sure you selected an account!"
         });
         return;
-      }
+      }*/
 
       endRevelation(this.state.chosenAccount) // change this?
       .then(res => {
@@ -349,7 +349,7 @@ class ViewResultComponent extends React.Component {
         return (
             <div className="ViewResultComponent">
                 <Box py={6} px={10}>
-                  <Paper style={{maxHeight: '60vh', overflow: 'auto'}}>
+                  <Paper style={{maxHeight: '60vh', overflow: 'auto'}} elevation={6}>
                     <Container>
                       <br/>
                       <h3>Check the result here</h3>
@@ -375,8 +375,7 @@ class ViewResultComponent extends React.Component {
 
                         </Form.Item>
                         <Form.Item>
-                          <MyButton type="primary"
-                          className="generate-result-button"
+                          <MyButton type="submit"
                           onClick={this.generateResult}>
                             Generate Result
                           </MyButton>
@@ -442,13 +441,12 @@ class ViewResultComponent extends React.Component {
                           />
                         </Form.Item>
                         <Form.Item >
-                          <MyButton type="primary" htmlType="submit" className="reopen-tender-button">
+                          <MyButton type="submit">
                             Reopen Tender
                           </MyButton>
                         </Form.Item>
                         <Form.Item >
-                          <MyButton type="primary"
-                          className="close-tender-button"
+                          <MyButton type="submit"
                           onClick={this.closeTender}>
                             Close Tender
                           </MyButton>

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Box, Container, Paper, Divider } from '@material-ui/core';
-import { Button, Form, Input, notification, Select, List } from 'antd';
+import { Box, Container, Paper, Divider, Button } from '@material-ui/core';
+import { Form, Input, notification, Select, List } from 'antd';
 import { styled } from '@material-ui/styles';
 import { getAllAccounts, getPhase, getProjectDetails, revealBid } from "./util";
-
 const { Option } = Select;
 const NONNEGINT_REGEX = RegExp('^[1-9]+[0-9]*$|^0$');
 const POSINT_REGEX = RegExp('^[1-9]+[0-9]*$');
@@ -142,7 +141,6 @@ class RevealBidComponent extends React.Component {
         });
         return;
       }
-
       revealBid(this.state.chosenAccount,this.state.nonce.value, this.state.bidAmount.value)
       .then(console.log("submitted"))
       .then(console.log(this.state.chosenAccount))
@@ -226,7 +224,7 @@ class RevealBidComponent extends React.Component {
         return (
             <div className="RevealBidComponent">
                 <Box py={6} px={10}>
-                  <Paper style={{maxHeight: '60vh', overflow: 'auto'}}>
+                  <Paper style={{maxHeight: '60vh', overflow: 'auto'}} elevation={6}>
                     <Container>
                       <br/>
                       <h3>Reveal your bid</h3>
@@ -305,7 +303,7 @@ class RevealBidComponent extends React.Component {
                           />
                         </Form.Item>
                         <Form.Item>
-                          <MyButton type="primary" htmlType="submit" className="reveal-bid-button">
+                          <MyButton type="submit" className="reveal-bid-button">
                             Submit
                           </MyButton>
                         </Form.Item>

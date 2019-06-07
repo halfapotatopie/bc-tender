@@ -10,7 +10,7 @@ const TenderJson = require("./contracts/Tender.json");  //set ABI output from tr
                                                             //make sure this is the right deployed network
 const HashGenerator = new web3.eth.Contract(HashGeneratorJson.abi, "0x25bc87baba84e90b99232a4e1d6eae670b6ccc49"); // Copy address of contract deployed on remix and replace this address
 // const Tender = new web3.eth.Contract(TenderJson.abi, TenderJson.networks[tChainId].address);
-const Tender = new web3.eth.Contract(TenderJson.abi, "0x0d0ffcbfd029be024ae00a7c65798ddf2d9f0d67"); // Copy address of contract deployed on remix and replace this address
+const Tender = new web3.eth.Contract(TenderJson.abi, "0x25dd064311d026f09ed82f0f8200d9fe369482a4"); // Copy address of contract deployed on remix and replace this address
 
 
 export async function getAllAccounts() {
