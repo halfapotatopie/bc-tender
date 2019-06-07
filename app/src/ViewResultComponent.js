@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Container, Paper, Button} from '@material-ui/core';
+import { Box, Container, Paper, Button } from '@material-ui/core';
 import { Form, Input, notification, Select, Divider } from 'antd';
 import { getAllAccounts, getPhase, reopenTender,
          closeContract, endRevelation, hasBeenChecked,
@@ -113,13 +113,13 @@ class ViewResultComponent extends React.Component {
 
     generateResult(event) {
       event.preventDefault();
-      /*if (!this.state.accountChosen) {
+      if (!this.state.accountChosen) {
         notification.error({
           message: "Error",
           description: "Make sure you selected an account!"
         });
         return;
-      }*/
+      }
 
       endRevelation(this.state.chosenAccount) // change this?
       .then(res => {
@@ -375,7 +375,8 @@ class ViewResultComponent extends React.Component {
 
                         </Form.Item>
                         <Form.Item>
-                          <MyButton type="submit"
+                          <MyButton type="primary"
+                          className="generate-result-button"
                           onClick={this.generateResult}>
                             Generate Result
                           </MyButton>
@@ -441,12 +442,13 @@ class ViewResultComponent extends React.Component {
                           />
                         </Form.Item>
                         <Form.Item >
-                          <MyButton type="submit">
+                          <MyButton type="submit" className="reopen-tender-button">
                             Reopen Tender
                           </MyButton>
                         </Form.Item>
                         <Form.Item >
                           <MyButton type="submit"
+                          className="close-tender-button"
                           onClick={this.closeTender}>
                             Close Tender
                           </MyButton>
