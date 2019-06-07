@@ -80,11 +80,6 @@ class SubmitBidComponent extends React.Component {
           detailsRevealEnd: new Date(parseInt(details[3], 10) * 1000),
           detailsLoaded: true
         });
-        console.log("updated details:");
-        console.log(this.state.detailsDescription);
-        console.log(this.state.detailsDeposit);
-        console.log(this.state.detailsBidEnd);
-        console.log(this.state.detailsRevealEnd);
       }).catch(error => {
         this.setState({
           detailsDescription: "",
@@ -131,10 +126,6 @@ class SubmitBidComponent extends React.Component {
           }
       });
       this.updateValidForm();
-      console.log(this.state.validForm);
-      console.log(this.state.accountChosen);
-      console.log(this.state.nonce.validateStatus);
-      console.log(this.state.bidAmount.validateStatus);
     }
 
     handleSubmit(event) {
@@ -144,10 +135,6 @@ class SubmitBidComponent extends React.Component {
           message: "Error",
           description: "Make sure all fields are filled in correctly!"
         });
-        console.log(this.state.validForm);
-        console.log(this.state.accountChosen);
-        console.log(this.state.nonce.validateStatus);
-        console.log(this.state.bidAmount.validateStatus);
         return;
       }
 
@@ -248,7 +235,7 @@ class SubmitBidComponent extends React.Component {
             <div className="SubmitBidComponent">
                 <Box py={6} px={10}>
                   <Paper>
-                    
+
                     <Container>
                       <br/>
                       <h2>Submit your bid</h2>
@@ -262,14 +249,14 @@ class SubmitBidComponent extends React.Component {
                       >
                         <Descriptions.Item label="Project Description">{this.state.detailsDescription}</Descriptions.Item>
                         <Descriptions.Item label="Deposit">{this.state.detailsDeposit}</Descriptions.Item>
-                        
-                        
+
+
                         <Descriptions.Item label="Bid End">{this.state.detailsBidEnd.toString()}</Descriptions.Item>
                         {/* Error trying to fetch dates
-                       
+
                         <Descriptions.Item label="Revelation End">{this.state.detailsRevealEnd}</Descriptions.Item>
                          */}
-                       
+
                       </Descriptions>
                       {/* form */}
                       <br />
@@ -321,7 +308,7 @@ class SubmitBidComponent extends React.Component {
                             placeholder="Amount"
                             addonAfter="ETH"
                             style={{ width: 200, marginRight: '3%' }}
-                          /> 
+                          />
                         </Form.Item>
                         <Form.Item>
                           <MyButton type="primary" htmlType="submit" className="submit-bid-button">
@@ -329,7 +316,7 @@ class SubmitBidComponent extends React.Component {
                           </MyButton>
                         </Form.Item>
                       </Form>
-                      <br/>              
+                      <br/>
                     </Container>
                     </Paper>
                 </Box>

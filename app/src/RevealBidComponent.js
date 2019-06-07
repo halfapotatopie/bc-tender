@@ -86,11 +86,6 @@ class RevealBidComponent extends React.Component {
           detailsRevealEnd: new Date(parseInt(details[3], 10) * 1000),
           detailsLoaded: true
         });
-        console.log("updated details:");
-        console.log(this.state.detailsDescription);
-        console.log(this.state.detailsDeposit);
-        console.log(this.state.detailsBidEnd);
-        console.log(this.state.detailsRevealEnd);
       }).catch(error => {
         this.setState({
           detailsDescription: "",
@@ -201,8 +196,8 @@ class RevealBidComponent extends React.Component {
     updateValidForm() {
       this.setState({
         validForm: (this.state.accountChosen
-                && this.state.nonce.validStatus === "success"
-                && this.state.bidAmount.validStatus === "success")
+                && this.state.nonce.validateStatus === "success"
+                && this.state.bidAmount.validateStatus === "success")
       });
     }
 
