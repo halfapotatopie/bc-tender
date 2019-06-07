@@ -1,6 +1,7 @@
 import React from 'react';
-import { Box, Container } from '@material-ui/core';
+import { Box, Container, Paper} from '@material-ui/core';
 import { Button, Form, Input, notification, Select } from 'antd';
+import { styled } from '@material-ui/styles';
 
 import { getAllAccounts, getPhase, getProjectDetails, getHash, submitHashedBid } from "./util";
 
@@ -32,7 +33,9 @@ class SubmitBidComponent extends React.Component {
           value: 0,
           validateStatus: "",
           errorMsg: null
-        }
+        },
+
+        formLayout: 'horizontal',
       };
 
       this.checkPhase = this.checkPhase.bind(this);
@@ -218,17 +221,39 @@ class SubmitBidComponent extends React.Component {
 
     // TODO: Reorganise stuff and restyle if needed
     render() {
+      const { formLayout } = this.state;
+
+      const formItemLayout =
+        formLayout === 'horizontal'
+        ? {
+            labelCol: { span: 4 },
+            wrapperCol: { span: 14 },
+          }
+        : null;
+
+      const MyButton = styled(Button)({
+        background: 'linear-gradient(30deg, #ff4081 30%, #448aff 90%)',
+        border: 0,
+        borderRadius: 3,
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        color: 'white',
+        height: 48,
+        padding: '0 30px',
+      });
+
       if (this.state.validPhase && this.state.detailsLoaded && this.state.accountsLoaded) {
         // TODO: Display project details (get from this.state)
         return (
             <div className="SubmitBidComponent">
                 <Box py={6} px={10}>
+                  <Paper>
+                    <br/>
                     <h3>Submit your bid</h3>
                     <Container>
-
                       {/* form */}
-                      <Form labelCol={{ span: 5 }} wrapperCol={{ span: 12 }} onSubmit={this.handleSubmit}>
-                        <Form.Item label="Account">
+                      <Form layout={formLayout}
+                            labelCol={{ span: 5 }} wrapperCol={{ span: 12 }} onSubmit={this.handleSubmit}>
+                        <Form.Item label="Account" {...formItemLayout}>
                             <Select
                             showSearch
                             style={{ width: 200 }}
@@ -245,7 +270,7 @@ class SubmitBidComponent extends React.Component {
                             </Select>
                         </Form.Item>
                         <Form.Item
-                          label="Nonce"
+                          label="Nonce" {...formItemLayout}
                           hasFeedback
                           validateStatus={this.state.nonce.validateStatus}
                           help={this.state.nonce.errorMsg}>
@@ -255,11 +280,11 @@ class SubmitBidComponent extends React.Component {
                             name="nonce"
                             onChange={evt => {this.handleInputChange(evt, this.validateNonce)}}
                             placeholder="Nonce"
-                            style={{ width: '65%', marginRight: '3%' }}
+                            style={{ width: 200, marginRight: '3%' }}
                           />
                         </Form.Item>
                         <Form.Item
-                          label="Amount"
+                          label="Amount" {...formItemLayout}
                           hasFeedback
                           validateStatus={this.state.bidAmount.validateStatus}
                           help={this.state.bidAmount.errorMsg}>
@@ -269,17 +294,19 @@ class SubmitBidComponent extends React.Component {
                             name="bidAmount"
                             onChange={evt => {this.handleInputChange(evt, this.validateAmount)}}
                             placeholder="Amount"
-                            style={{ width: '65%', marginRight: '3%' }}
-                          /> ETH
+                            addonAfter="ETH"
+                            style={{ width: 200, marginRight: '3%' }}
+                          /> 
                         </Form.Item>
-                        <Form.Item wrapperCol={{ span: 12, offset: 5 }}>
-                          <Button type="primary" htmlType="submit" className="submit-bid-button">
+                        <Form.Item>
+                          <MyButton type="primary" htmlType="submit" className="submit-bid-button">
                             Submit
-                          </Button>
+                          </MyButton>
                         </Form.Item>
                       </Form>
-
+                      <br/>              
                     </Container>
+                    </Paper>
                 </Box>
             </div>
         );
