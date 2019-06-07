@@ -138,7 +138,11 @@ class SubmitBidComponent extends React.Component {
       getHash(this.state.nonce.value, this.state.bidAmount.value)
       .then(hash => {
         return submitHashedBid(this.state.chosenAccount, hash, this.state.detailsDeposit);
-      }).then(res => {
+      }).then(console.log("submitted"))
+      .then(console.log(this.state.chosenAccount))
+      .then(console.log(this.state.nonce.value))
+      .then(console.log(this.state.bidAmount.value))
+      .then(res => {
         if (res) {
           notification.success({
             message: "Success",
