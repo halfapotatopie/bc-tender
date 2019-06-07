@@ -8,9 +8,9 @@ const HashGeneratorJson = require("./contracts/HashGenerator.json");
 const TenderJson = require("./contracts/Tender.json");  //set ABI output from truffle
 // const tChainId = Object.keys(TenderJson.networks)[0]; //picks the first deployed network
                                                             //make sure this is the right deployed network
-const HashGenerator = new web3.eth.Contract(HashGeneratorJson.abi, "0x25bc87baba84e90b99232a4e1d6eae670b6ccc49"); // Copy address of contract deployed on remix and replace this address
+const HashGenerator = new web3.eth.Contract(HashGeneratorJson.abi, "0xc58a676d496d8d1b0d5f773385da4ff50e05e7d0"); // Copy address of contract deployed on remix and replace this address
 // const Tender = new web3.eth.Contract(TenderJson.abi, TenderJson.networks[tChainId].address);
-const Tender = new web3.eth.Contract(TenderJson.abi, "0x0d0ffcbfd029be024ae00a7c65798ddf2d9f0d67"); // Copy address of contract deployed on remix and replace this address
+const Tender = new web3.eth.Contract(TenderJson.abi, "0x3c66bf8f5a492f4ea8907eec7d8570bd11fdbe24"); // Copy address of contract deployed on remix and replace this address
 
 
 export async function getAllAccounts() {
