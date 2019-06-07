@@ -115,16 +115,16 @@ class ViewResultComponent extends React.Component {
 
     generateResult(event) {
       event.preventDefault();
-      if (!this.state.accountChosen) {
+      /*if (!this.state.accountChosen) {
         notification.error({
           message: "Error",
           description: "Make sure you selected an account!"
         });
         return;
-      }
+      }*/
 
       endRevelation(this.state.chosenAccount)
-      .then(res => {
+      /*.then(res => {
         notification.success({
           message: "Success",
           description: "Generated result successfully!"
@@ -135,7 +135,7 @@ class ViewResultComponent extends React.Component {
           message: "Error",
           description: "You are not the owner!"
         });
-      });
+      });*/
     }
 
     closeTender(event) {
