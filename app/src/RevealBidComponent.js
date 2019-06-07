@@ -1,7 +1,7 @@
 import React from 'react';
-import { Box, Container } from '@material-ui/core';
-import { Button, Form, Input, notification, Select } from 'antd';
-
+import { Box, Container, Paper, Divider } from '@material-ui/core';
+import { Button, Form, Input, notification, Select, List } from 'antd';
+import { styled } from '@material-ui/styles';
 import { getAllAccounts, getPhase, getProjectDetails, revealBid } from "./util";
 
 const { Option } = Select;
@@ -210,19 +210,58 @@ class RevealBidComponent extends React.Component {
 
     // TODO: Reorganise stuff and restyle if needed
     render() {
+      const MyButton = styled(Button)({
+        background: 'linear-gradient(30deg, #ff4081 30%, #448aff 90%)',
+        border: 0,
+        borderRadius: 3,
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        color: 'white',
+        height: 48,
+        padding: '0 30px',
+        align: "center",
+      });
+
       if (this.state.validPhase && this.state.detailsLoaded && this.state.accountsLoaded) {
         // TODO: Display project details (get from this.state)
         return (
             <div className="RevealBidComponent">
                 <Box py={6} px={10}>
-                    <h3>Reveal your bid</h3>
+                  <Paper style={{maxHeight: '75vh', overflow: 'auto'}}>
                     <Container>
-                      <Form labelCol={{ span: 5 }} wrapperCol={{ span: 12 }} onSubmit={this.handleSubmit}>
+                      <br/>
+                      <h3>Reveal your bid</h3>
+                      <br/>
+                      <List itemLayout="horizontal">
+                      <List.Item>
+                        <List.Item.Meta
+                          title="Project Description"
+                          description={this.state.detailsDescription}/>
+                      </List.Item>
+                      <List.Item>
+                        <List.Item.Meta
+                          title="Deposit"
+                          description={this.state.detailsDeposit}/>
+                      </List.Item>
+                      <List.Item>
+                        <List.Item.Meta
+                          title="Bid End"
+                          description={this.state.detailsBidEnd.toString()}/>
+                      </List.Item>
+                      <List.Item>
+                        <List.Item.Meta
+                          title="Reveal End"
+                          description={this.state.detailsRevealEnd.toString()}/>
+                      </List.Item>
+                    </List>
+                    <br/>
+                      <Divider />
+                      <br />
+                      <Form 
+                        onSubmit={this.handleSubmit}>
                         <Form.Item label="Account">
-
                             <Select
                             showSearch
-                            style={{ width: 200 }}
+                            style={{ width: '20vw', marginRight: '3%' }}
                             placeholder="Select an account"
                             optionFilterProp="children"
                             filterOption={(input, option) =>
@@ -247,7 +286,7 @@ class RevealBidComponent extends React.Component {
                             name="nonce"
                             onChange={evt => {this.handleInputChange(evt, this.validateNonce)}}
                             placeholder="Nonce"
-                            style={{ width: '65%', marginRight: '3%' }}
+                            style={{ width: '20vw', marginRight: '3%' }}
                           />
                         </Form.Item>
                         <Form.Item
@@ -261,16 +300,18 @@ class RevealBidComponent extends React.Component {
                             name="bidAmount"
                             onChange={evt => {this.handleInputChange(evt, this.validateAmount)}}
                             placeholder="Amount"
-                            style={{ width: '65%', marginRight: '3%' }}
-                          /> ETH
+                            addonAfter="ETH"
+                            style={{ width: '20vw', marginRight: '3%' }}
+                          />
                         </Form.Item>
-                        <Form.Item wrapperCol={{ span: 12, offset: 5 }}>
-                          <Button type="primary" htmlType="submit" className="reveal-bid-button">
+                        <Form.Item>
+                          <MyButton type="primary" htmlType="submit" className="reveal-bid-button">
                             Submit
-                          </Button>
+                          </MyButton>
                         </Form.Item>
                       </Form>
                     </Container>
+                  </Paper>
                 </Box>
             </div>
         );

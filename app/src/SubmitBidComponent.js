@@ -225,7 +225,7 @@ class SubmitBidComponent extends React.Component {
         return (
             <div className="SubmitBidComponent">
                 <Box py={6} px={10}>
-                  <Paper style={{maxHeight: '60vh', overflow: 'auto'}}>
+                  <Paper style={{maxHeight: '75vh', overflow: 'auto'}}>
                     <Container>
                       <br/>
                       <h2>Submit your bid</h2>
@@ -259,13 +259,12 @@ class SubmitBidComponent extends React.Component {
                       <br />
 
                       <Form
-                            onSubmit={this.handleSubmit}
-                            labelAlign="left"
-                            >
+                          onSubmit={this.handleSubmit}
+                          >
                         <Form.Item label="Account" >
                             <Select
                             showSearch
-                            style={{ width: 200 }}
+                            style={{ width: '20vw', marginRight: '3%'}}
                             placeholder="Select an account"
                             optionFilterProp="children"
                             filterOption={(input, option) =>
@@ -289,7 +288,7 @@ class SubmitBidComponent extends React.Component {
                             name="nonce"
                             onChange={evt => {this.handleInputChange(evt, this.validateNonce)}}
                             placeholder="Nonce"
-                            style={{ width: 200, marginRight: '3%' }}
+                            style={{ width: '20vw', marginRight: '3%' }}
                           />
                         </Form.Item>
                         <Form.Item
@@ -304,7 +303,7 @@ class SubmitBidComponent extends React.Component {
                             onChange={evt => {this.handleInputChange(evt, this.validateAmount)}}
                             placeholder="Amount"
                             addonAfter="ETH"
-                            style={{ width: 200, marginRight: '3%' }}
+                            style={{ width: '20vw', marginRight: '3%' }}
                           />
                         </Form.Item>
                         <Form.Item>
