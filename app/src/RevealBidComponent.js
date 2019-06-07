@@ -226,7 +226,7 @@ class RevealBidComponent extends React.Component {
         return (
             <div className="RevealBidComponent">
                 <Box py={6} px={10}>
-                  <Paper style={{maxHeight: '75vh', overflow: 'auto'}}>
+                  <Paper style={{maxHeight: '60vh', overflow: 'auto'}}>
                     <Container>
                       <br/>
                       <h3>Reveal your bid</h3>

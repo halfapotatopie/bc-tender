@@ -1,9 +1,10 @@
 import React from 'react';
-import { Box, Container } from '@material-ui/core';
-import { Button, Form, Input, notification, Select } from 'antd';
+import { Box, Container, Paper } from '@material-ui/core';
+import { Button, Form, Input, notification, Select, Divider } from 'antd';
 import { getAllAccounts, getPhase, reopenTender,
          closeContract, endRevelation, hasBeenChecked,
          hasWinner, getResult } from "./util";
+import { styled } from '@material-ui/styles';
 
 const { Option } = Select;
 const POSINT_REGEX = RegExp('^[1-9]+[0-9]*$');
@@ -321,19 +322,33 @@ class ViewResultComponent extends React.Component {
 
     // TODO: Reorganise stuff and restyle if needed
     render() {
+      const MyButton = styled(Button)({
+        background: 'linear-gradient(30deg, #ff4081 30%, #448aff 90%)',
+        border: 0,
+        borderRadius: 3,
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        color: 'white',
+        height: 48,
+        padding: '0 30px',
+        align: "center",
+      });
+
       if (this.state.validPhase && this.state.resultDetailsLoaded && this.state.accountsLoaded) {
         return (
             <div className="ViewResultComponent">
                 <Box py={6} px={10}>
-                    <h3>Check the result here</h3>
-                    {this.generateResultMessage()}
+                  <Paper style={{maxHeight: '60vh', overflow: 'auto'}}>
                     <Container>
-                      <Form labelCol={{ span: 5 }} wrapperCol={{ span: 12 }} onSubmit={this.handleSubmit}>
+                      <br/>
+                      <h3>Check the result here</h3>
+                      {this.generateResultMessage()}
+                      <br/>
+                      <Form onSubmit={this.handleSubmit}>
                         <Form.Item label="Account">
 
                             <Select
                             showSearch
-                            style={{ width: 200 }}
+                            style={{ width: '20vw', marginRight: '3%'}}
                             placeholder="Select an account"
                             optionFilterProp="children"
                             filterOption={(input, option) =>
@@ -347,13 +362,14 @@ class ViewResultComponent extends React.Component {
                             </Select>
 
                         </Form.Item>
-                        <Form.Item wrapperCol={{ span: 12, offset: 5 }}>
-                          <Button type="primary"
+                        <Form.Item>
+                          <MyButton type="primary"
                           className="generate-result-button"
                           onClick={this.generateResult}>
                             Generate Result
-                          </Button>
+                          </MyButton>
                         </Form.Item>
+                        <Divider />
                         <Form.Item
                           label="Project Description"
                           hasFeedback
@@ -365,7 +381,7 @@ class ViewResultComponent extends React.Component {
                             name="newDescription"
                             onChange={evt => {this.handleInputChange(evt, this.validateDescription)}}
                             placeholder="Description"
-                            style={{ width: '65%', marginRight: '3%' }}
+                            style={{ width: '20vw', marginRight: '3%'}}
                           />
                         </Form.Item>
                         <Form.Item
@@ -379,8 +395,9 @@ class ViewResultComponent extends React.Component {
                             name="newBiddingDuration"
                             onChange={evt => {this.handleInputChange(evt, this.validateBiddingDuration)}}
                             placeholder="Duration"
-                            style={{ width: '65%', marginRight: '3%' }}
-                          /> min
+                            addonAfter="min"
+                            style={{ width: '20vw', marginRight: '3%'}}
+                          /> 
                         </Form.Item>
                         <Form.Item
                           label="Revelation Duration"
@@ -393,8 +410,9 @@ class ViewResultComponent extends React.Component {
                             name="newRevelationDuration"
                             onChange={evt => {this.handleInputChange(evt, this.validateRevelationDuration)}}
                             placeholder="Duration"
-                            style={{ width: '65%', marginRight: '3%' }}
-                          /> min
+                            addonAfter="min"
+                            style={{ width: '20vw', marginRight: '3%'}}
+                          /> 
                         </Form.Item>
                         <Form.Item
                           label="Deposit Amount"
@@ -407,23 +425,25 @@ class ViewResultComponent extends React.Component {
                             name="newDepositAmount"
                             onChange={evt => {this.handleInputChange(evt, this.validateDepositAmount)}}
                             placeholder="Amount"
-                            style={{ width: '65%', marginRight: '3%' }}
-                          /> ETH
+                            addonAfter="ETH"
+                            style={{ width: '20vw', marginRight: '3%'}}
+                          />
                         </Form.Item>
-                        <Form.Item wrapperCol={{ span: 12, offset: 5 }}>
-                          <Button type="primary" htmlType="submit" className="reopen-tender-button">
+                        <Form.Item >
+                          <MyButton type="primary" htmlType="submit" className="reopen-tender-button">
                             Reopen Tender
-                          </Button>
+                          </MyButton>
                         </Form.Item>
-                        <Form.Item wrapperCol={{ span: 12, offset: 5 }}>
-                          <Button type="primary"
+                        <Form.Item >
+                          <MyButton type="primary"
                           className="close-tender-button"
                           onClick={this.closeTender}>
                             Close Tender
-                          </Button>
+                          </MyButton>
                         </Form.Item>
                       </Form>
                     </Container>
+                  </Paper>
                 </Box>
             </div>
         );

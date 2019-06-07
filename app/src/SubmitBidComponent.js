@@ -225,10 +225,10 @@ class SubmitBidComponent extends React.Component {
         return (
             <div className="SubmitBidComponent">
                 <Box py={6} px={10}>
-                  <Paper style={{maxHeight: '75vh', overflow: 'auto'}}>
+                  <Paper style={{maxHeight: '60vh', overflow: 'auto'}}>
                     <Container>
                       <br/>
-                      <h2>Submit your bid</h2>
+                      <h3>Submit your bid</h3>
                       <br />
                     <List itemLayout="horizontal">
                       <List.Item>
