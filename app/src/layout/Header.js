@@ -9,7 +9,7 @@ import MoneyIcon from '@material-ui/icons/AttachMoney';
 import ResultIcon from '@material-ui/icons/ListAlt';
 import SubmitIcon from '@material-ui/icons/Send';
 import "./Header.css"
-
+// TODO: Redesign this? and fix console error
 function Header() {
     return (
         <BrowserRouter>

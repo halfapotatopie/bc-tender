@@ -53,8 +53,21 @@ contract Tender {
         _;
     }
 
-    function hasBidBefore(address bidder) private view returns (bool) {
+    function hasBidBefore(address bidder) public view returns (bool) {
         return bidExists[bidder];
+    }
+
+    function hasBeenChecked() public view onlyAfter(revelationEnd) returns (bool) {
+      return checkedByOwner;
+    }
+
+    function isOwner(address user) public view returns (bool) {
+      return (user == owner);
+    }
+
+    function hasWinner() public view onlyAfter(revelationEnd) returns (bool) {
+      require(checkedByOwner);
+      return winnerExists;
     }
 
     // Lets bidder submit hashed bids and ensures that bidders only make one bid each

@@ -1,9 +1,8 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-import { Box, Container, TextField } from '@material-ui/core';
+import { Box, Container } from '@material-ui/core';
 import { Button, Form, Input, notification, Select } from 'antd';
 
-import { getAllAccounts, getPhase, getProjectDetails, getHash, submitHashedBid, test } from "./util";
+import { getAllAccounts, getPhase, getProjectDetails, getHash, submitHashedBid } from "./util";
 
 const { Option } = Select;
 const NONNEGINT_REGEX = RegExp('^[1-9]+[0-9]*$|^0$');
@@ -14,6 +13,7 @@ class SubmitBidComponent extends React.Component {
       super(props);
       this.state = {
         validPhase: false,
+        validForm: false,
         detailsDescription: "",
         detailsDeposit: 0,
         detailsBidEnd: 0,
@@ -43,7 +43,7 @@ class SubmitBidComponent extends React.Component {
       this.handleSubmit = this.handleSubmit.bind(this);
       this.validateNonce = this.validateNonce.bind(this);
       this.validateAmount = this.validateAmount.bind(this);
-      this.isFormValid = this.isFormValid.bind(this);
+      this.updateValidForm = this.updateValidForm.bind(this);
     }
 
 
@@ -73,8 +73,8 @@ class SubmitBidComponent extends React.Component {
         this.setState({
           detailsDescription: details[0],
           detailsDeposit: parseInt(details[1], 16),
-          detailsBidEnd: new Date(parseInt(details[2], 16)),
-          detailsRevealEnd: new Date(parseInt(details[3], 16)),
+          detailsBidEnd: new Date(parseInt(details[2], 10) * 1000),
+          detailsRevealEnd: new Date(parseInt(details[3], 10) * 1000),
           detailsLoaded: true
         });
         console.log("updated details:");
@@ -113,6 +113,7 @@ class SubmitBidComponent extends React.Component {
         chosenAccount: value,
         accountChosen: true
       });
+      this.updateValidForm();
     }
 
     handleInputChange(evt, validationFunc) {
@@ -126,13 +127,24 @@ class SubmitBidComponent extends React.Component {
             ...validationFunc(inputValue)
           }
       });
+      this.updateValidForm();
     }
 
     handleSubmit(event) {
       event.preventDefault();
+      if (!this.state.validForm) {
+        notification.error({
+          message: "Error",
+          description: "Make sure all fields are filled in correctly!"
+        });
+        return;
+      }
+
       getHash(this.state.nonce.value, this.state.bidAmount.value)
       .then(hash => {
-        return submitHashedBid(this.state.chosenAccount, hash);
+        console.log("hash:");
+        console.log(hash);
+        return submitHashedBid(this.state.chosenAccount, hash, this.state.detailsDeposit);
       }).then(res => {
         notification.success({
           message: "Success",
@@ -181,10 +193,12 @@ class SubmitBidComponent extends React.Component {
       }
     }
 
-    isFormValid() {
-      return (this.state.accountChosen
-              && this.state.nonce.validStatus === "success"
-              && this.state.bidAmount.validStatus === "success");
+    updateValidForm() {
+      this.setState({
+        validForm: (this.state.accountChosen
+                && this.state.nonce.validStatus === "success"
+                && this.state.bidAmount.validStatus === "success")
+      });
     }
 
     componentDidMount() {
@@ -194,12 +208,10 @@ class SubmitBidComponent extends React.Component {
     }
 
 
-    //code to push state to HashGenerator contract
-    // TODO: display project details, reorganise stuff and change styling if needed
-    // need to check if bid amount is more than depositAmount (change solidity?)
+    // TODO: Reorganise stuff and restyle if needed
     render() {
       if (this.state.validPhase && this.state.detailsLoaded && this.state.accountsLoaded) {
-        // TODO: Display project details (get from this.state.projectDetails)
+        // TODO: Display project details (get from this.state)
         return (
             <div className="SubmitBidComponent">
                 <Box py={6} px={10}>
@@ -253,7 +265,7 @@ class SubmitBidComponent extends React.Component {
                           /> ETH
                         </Form.Item>
                         <Form.Item wrapperCol={{ span: 12, offset: 5 }}>
-                          <Button type="primary" htmlType="submit" className="submit-bid-button" disabled={!this.isFormValid()}>
+                          <Button type="primary" htmlType="submit" className="submit-bid-button">
                             Submit
                           </Button>
                         </Form.Item>
@@ -262,18 +274,19 @@ class SubmitBidComponent extends React.Component {
                 </Box>
             </div>
         );
-      } else if (this.state.validPhase && this.state.detailsLoaded) { // return a page with just project details
+      } else if (this.state.validPhase && this.state.detailsLoaded) {
+        // TODO: Return a page with just project details
         return (
           <div>
           </div>
         );
-      } else if (this.state.validPhase) { // return empty page
+      } else if (this.state.validPhase) { // Returns an empty page
         return (
           <div>
           </div>
         );
-      } else { // return a page that says invalid phase
-        console.log(this.state.accounts);
+      } else {
+        // TODO: Restyle
         return (
           <div>
             Bidding Phase has ended!

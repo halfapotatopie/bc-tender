@@ -17,6 +17,30 @@ export function getAllAccounts() {
   return web3.eth.getAccounts();
 };
 
+export function hasBeenChecked() {
+  try {
+    return Tender.methods.hasBeenChecked().call();
+  } catch(err) {
+    throw err;
+  }
+};
+
+export function isOwner(address) {
+  try {
+    return Tender.methods.isOwner(address).call();
+  } catch(err) {
+    throw err;
+  }
+};
+
+export function hasWinner() {
+  try {
+    return Tender.methods.hasWinner().call();
+  } catch(err) {
+    throw err;
+  }
+};
+
 export function getHash(nonce, amount) {
   try {
     return HashGenerator.methods.generateHash(nonce, amount).call();
@@ -33,9 +57,22 @@ export function getPhase() {
   }
 };
 
-export function submitHashedBid(account, hash) {
+export function submitHashedBid(account, hash, depositInEth) {
   try {
-    return Tender.methods.makeBid(hash).send({from: account});
+    Tender.methods.hasBidBefore(account).call()
+    .then(bidBefore => {
+      if (bidBefore) {
+        Tender.methods.makeBid(hash).send({from: account})
+        .then(res => {
+          return true;
+        });
+      } else {
+        Tender.methods.makeBid(hash).send({from: account, value: (depositInEth * Math.pow(10, 18))})
+        .then(res => {
+          return true;
+        });
+      }
+    });
   } catch(err) {
     throw err;
   }
@@ -43,7 +80,10 @@ export function submitHashedBid(account, hash) {
 
 export function revealBid(account, nonce, amount) {
   try {
-    return Tender.methods.revealBid(nonce, amount).send({from: account});
+    Tender.methods.revealBid(nonce, amount).send({from: account})
+    .then(res => {
+      return true;
+    });
   } catch(err) {
     throw err;
   }
@@ -51,7 +91,10 @@ export function revealBid(account, nonce, amount) {
 
 export function endRevelation(account) {
   try {
-    return Tender.methods.endRevelation().send({from: account});
+    Tender.methods.endRevelation().send({from: account})
+    .then(res => {
+      return true;
+    });
   } catch(err) {
     throw err;
   }
@@ -59,7 +102,10 @@ export function endRevelation(account) {
 
 export function closeContract(account) {
   try {
-    return Tender.methods.close().send({from: account});
+    Tender.methods.close().send({from: account})
+    .then(res => {
+      return true;
+    });
   } catch(err) {
     throw err;
   }
@@ -67,7 +113,10 @@ export function closeContract(account) {
 
 export function reopenTender(account, desc, biddingDuration, revelationDuration, depositAmount) {
   try {
-    return Tender.methods.reopenTender(desc, biddingDuration, revelationDuration,depositAmount).send({from: account});
+    Tender.methods.reopenTender(desc, biddingDuration, revelationDuration,depositAmount).send({from: account})
+    .then(res => {
+      return true;
+    });
   } catch(err) {
     throw err;
   }

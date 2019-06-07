@@ -6,10 +6,7 @@ import RevealBidComponent from "./RevealBidComponent";
 import ViewResultComponent from "./ViewResultComponent";
 import { BrowserRouter, Route } from "react-router-dom";
 
-class MyComponent extends React.Component{
-  constructor(props) {
-    super(props);
-  }
+class MyComponent extends React.Component {
 
   componentDidMount() {
 
@@ -22,7 +19,7 @@ class MyComponent extends React.Component{
         <BrowserRouter>
           <Route exact path="/" component = {HomeComponent} />
           <Route exact path="/bid" component = {SubmitBidComponent} />
-          <Route exact path="/nounce" component = {RevealBidComponent}/>
+          <Route exact path="/reveal" component = {RevealBidComponent}/>
           <Route exact path="/result" component = {ViewResultComponent}/>
         </BrowserRouter>
       </div>
