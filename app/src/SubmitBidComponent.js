@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Container, Paper, Divider } from '@material-ui/core';
-import { Button, Form, Input, notification, Select, List } from 'antd';
+import { Box, Container, Paper, Divider, Button } from '@material-ui/core';
+import { Form, Input, notification, Select, List } from 'antd';
 import { styled } from '@material-ui/styles';
 
 import { getAllAccounts, getPhase, getProjectDetails, getHash, submitHashedBid } from "./util";
@@ -226,7 +226,7 @@ class SubmitBidComponent extends React.Component {
         return (
             <div className="SubmitBidComponent">
                 <Box py={6} px={10}>
-                  <Paper style={{maxHeight: '60vh', overflow: 'auto'}}>
+                  <Paper style={{maxHeight: '60vh', overflow: 'auto'}} elevation={6}>
                     <Container>
                       <br/>
                       <h3>Submit your bid</h3>
@@ -308,7 +308,7 @@ class SubmitBidComponent extends React.Component {
                           />
                         </Form.Item>
                         <Form.Item>
-                          <MyButton type="primary" htmlType="submit" className="submit-bid-button">
+                          <MyButton type="submit" className="submit-bid-button">
                             Submit
                           </MyButton>
                         </Form.Item>
