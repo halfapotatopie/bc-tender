@@ -128,6 +128,10 @@ class SubmitBidComponent extends React.Component {
           }
       });
       this.updateValidForm();
+      console.log(this.state.validForm);
+      console.log(this.state.accountChosen);
+      console.log(this.state.nonce.validateStatus);
+      console.log(this.state.bidAmount.validateStatus);
     }
 
     handleSubmit(event) {
@@ -137,6 +141,10 @@ class SubmitBidComponent extends React.Component {
           message: "Error",
           description: "Make sure all fields are filled in correctly!"
         });
+        console.log(this.state.validForm);
+        console.log(this.state.accountChosen);
+        console.log(this.state.nonce.validateStatus);
+        console.log(this.state.bidAmount.validateStatus);
         return;
       }
 
@@ -196,8 +204,8 @@ class SubmitBidComponent extends React.Component {
     updateValidForm() {
       this.setState({
         validForm: (this.state.accountChosen
-                && this.state.nonce.validStatus === "success"
-                && this.state.bidAmount.validStatus === "success")
+                && this.state.nonce.validateStatus === "success"
+                && this.state.bidAmount.validateStatus === "success")
       });
     }
 
@@ -217,9 +225,10 @@ class SubmitBidComponent extends React.Component {
                 <Box py={6} px={10}>
                     <h3>Submit your bid</h3>
                     <Container>
+
+                      {/* form */}
                       <Form labelCol={{ span: 5 }} wrapperCol={{ span: 12 }} onSubmit={this.handleSubmit}>
                         <Form.Item label="Account">
-
                             <Select
                             showSearch
                             style={{ width: 200 }}
@@ -234,7 +243,6 @@ class SubmitBidComponent extends React.Component {
                                 <Option key={value}>{value}</Option>
                               ))}
                             </Select>
-
                         </Form.Item>
                         <Form.Item
                           label="Nonce"
@@ -270,6 +278,7 @@ class SubmitBidComponent extends React.Component {
                           </Button>
                         </Form.Item>
                       </Form>
+
                     </Container>
                 </Box>
             </div>
