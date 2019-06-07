@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Container, Paper} from '@material-ui/core';
-import { Button, Form, Input, notification, Select } from 'antd';
+import { Box, Container, Paper, Divider } from '@material-ui/core';
+import { Button, Form, Input, notification, Select, Descriptions } from 'antd';
 import { styled } from '@material-ui/styles';
 
 import { getAllAccounts, getPhase, getProjectDetails, getHash, submitHashedBid } from "./util";
@@ -247,10 +247,27 @@ class SubmitBidComponent extends React.Component {
             <div className="SubmitBidComponent">
                 <Box py={6} px={10}>
                   <Paper>
-                    <br/>
-                    <h3>Submit your bid</h3>
+                    
                     <Container>
+                      <br/>
+                      <h2>Submit your bid</h2>
+
+                      <Divider />
+                      <br />
+                    <Descriptions
+                        title="Tender Description"
+                        border
+                        column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}
+                      >
+                        <Descriptions.Item label="Project Description">{this.state.detailsDescription}</Descriptions.Item>
+                        <Descriptions.Item label="Deposit">{this.state.detailsDeposit}</Descriptions.Item>
+                        <Descriptions.Item label="Amount">$80.00</Descriptions.Item>
+                      </Descriptions>
                       {/* form */}
+                      <br />
+                      <Divider />
+                      <br />
+
                       <Form layout={formLayout}
                             labelCol={{ span: 5 }} wrapperCol={{ span: 12 }} onSubmit={this.handleSubmit}>
                         <Form.Item label="Account" {...formItemLayout}>
