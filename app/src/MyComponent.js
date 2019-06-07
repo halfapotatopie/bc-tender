@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
-import Heart from '@material-ui/icons/Favorite';
+import Flame from '@material-ui/icons/Whatshot';
 
 function MadeWithLove() {
   return (
@@ -19,7 +19,7 @@ function MadeWithLove() {
       <Link color="inherit" href="https://www.ethereum.org" target="_blank">
         Ethereum
       </Link>
-      {' 2019 - '}
+      {' 2019 '}
     </Typography>
   );
 }
@@ -30,7 +30,8 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
     marginTop: 'auto',
     backgroundColor: '#fff',
-  },
+  }, 
+
 }));
 
 function MyComponent() {
@@ -50,7 +51,7 @@ function MyComponent() {
           </BrowserRouter>
           <footer className={classes.footer}>
             <Container maxWidth="sm">
-              <Typography variant="h6">Blockchain Tender App <Heart/></Typography>
+              <Typography variant="h6">Blockchain Tender App <Flame/></Typography>
               <MadeWithLove />
             </Container>
           </footer>

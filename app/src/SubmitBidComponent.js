@@ -261,7 +261,13 @@ class SubmitBidComponent extends React.Component {
                       >
                         <Descriptions.Item label="Project Description">{this.state.detailsDescription}</Descriptions.Item>
                         <Descriptions.Item label="Deposit">{this.state.detailsDeposit}</Descriptions.Item>
-                        <Descriptions.Item label="Amount">$80.00</Descriptions.Item>
+                        {/* Error trying to fetch dates
+                        
+                        <Descriptions.Item label="Bid End">{this.state.detailsBidEnd}</Descriptions.Item>
+                        <Descriptions.Item label="Revelation End">{this.state.detailsRevealEnd}</Descriptions.Item>
+
+                         */}
+                       
                       </Descriptions>
                       {/* form */}
                       <br />
