@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Container, Paper, Divider } from '@material-ui/core';
-import { Button, Form, Input, notification, Select, Descriptions } from 'antd';
+import { Button, Form, Input, notification, Select, List } from 'antd';
 import { styled } from '@material-ui/styles';
 
 import { getAllAccounts, getPhase, getProjectDetails, getHash, submitHashedBid } from "./util";
@@ -221,15 +221,6 @@ class SubmitBidComponent extends React.Component {
 
     // TODO: Reorganise stuff and restyle if needed
     render() {
-      const { formLayout } = this.state;
-
-      const formItemLayout =
-        formLayout === 'horizontal'
-        ? {
-            labelCol: { span: 4 },
-            wrapperCol: { span: 14 },
-          }
-        : null;
 
       const MyButton = styled(Button)({
         background: 'linear-gradient(30deg, #ff4081 30%, #448aff 90%)',
@@ -247,38 +238,44 @@ class SubmitBidComponent extends React.Component {
         return (
             <div className="SubmitBidComponent">
                 <Box py={6} px={10}>
-                  <Paper>
-                    
+                  <Paper style={{maxHeight: '60vh', overflow: 'auto'}}>
                     <Container>
                       <br/>
                       <h2>Submit your bid</h2>
-
-                      <Divider />
                       <br />
-                    <Descriptions
-                        title="Tender Description"
-                        border
-                        column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}
-                      >
-                        <Descriptions.Item label="Project Description">{this.state.detailsDescription}</Descriptions.Item>
-                        <Descriptions.Item label="Deposit">{this.state.detailsDeposit}</Descriptions.Item>
-                        
-                        
-                        <Descriptions.Item label="Bid End">{this.state.detailsBidEnd.toString()}</Descriptions.Item>
-                        {/* Error trying to fetch dates
-                       
-                        <Descriptions.Item label="Revelation End">{this.state.detailsRevealEnd}</Descriptions.Item>
-                         */}
-                       
-                      </Descriptions>
+                    <List itemLayout="horizontal">
+                      <List.Item>
+                        <List.Item.Meta
+                          title="Project Description"
+                          description={this.state.detailsDescription}/>
+                      </List.Item>
+                      <List.Item>
+                        <List.Item.Meta
+                          title="Deposit"
+                          description={this.state.detailsDeposit}/>
+                      </List.Item>
+                      <List.Item>
+                        <List.Item.Meta
+                          title="Bid End"
+                          description={this.state.detailsBidEnd.toString()}/>
+                      </List.Item>
+                      <List.Item>
+                        <List.Item.Meta
+                          title="Reveal End"
+                          description={this.state.detailsRevealEnd.toString()}/>
+                      </List.Item>
+                    </List>
+                      
                       {/* form */}
                       <br />
                       <Divider />
                       <br />
 
-                      <Form layout={formLayout}
-                            labelCol={{ span: 5 }} wrapperCol={{ span: 12 }} onSubmit={this.handleSubmit}>
-                        <Form.Item label="Account" {...formItemLayout}>
+                      <Form
+                            onSubmit={this.handleSubmit}
+                            labelAlign="left"
+                            >
+                        <Form.Item label="Account" >
                             <Select
                             showSearch
                             style={{ width: 200 }}
@@ -295,7 +292,7 @@ class SubmitBidComponent extends React.Component {
                             </Select>
                         </Form.Item>
                         <Form.Item
-                          label="Nonce" {...formItemLayout}
+                          label="Nonce" 
                           hasFeedback
                           validateStatus={this.state.nonce.validateStatus}
                           help={this.state.nonce.errorMsg}>
@@ -309,7 +306,7 @@ class SubmitBidComponent extends React.Component {
                           />
                         </Form.Item>
                         <Form.Item
-                          label="Amount" {...formItemLayout}
+                          label="Amount" 
                           hasFeedback
                           validateStatus={this.state.bidAmount.validateStatus}
                           help={this.state.bidAmount.errorMsg}>
