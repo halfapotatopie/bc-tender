@@ -80,11 +80,6 @@ class SubmitBidComponent extends React.Component {
           detailsRevealEnd: new Date(parseInt(details[3], 10) * 1000),
           detailsLoaded: true
         });
-        console.log("updated details:");
-        console.log(this.state.detailsDescription);
-        console.log(this.state.detailsDeposit);
-        console.log(this.state.detailsBidEnd);
-        console.log(this.state.detailsRevealEnd);
       }).catch(error => {
         this.setState({
           detailsDescription: "",
@@ -131,10 +126,6 @@ class SubmitBidComponent extends React.Component {
           }
       });
       this.updateValidForm();
-      console.log(this.state.validForm);
-      console.log(this.state.accountChosen);
-      console.log(this.state.nonce.validateStatus);
-      console.log(this.state.bidAmount.validateStatus);
     }
 
     handleSubmit(event) {
@@ -144,10 +135,6 @@ class SubmitBidComponent extends React.Component {
           message: "Error",
           description: "Make sure all fields are filled in correctly!"
         });
-        console.log(this.state.validForm);
-        console.log(this.state.accountChosen);
-        console.log(this.state.nonce.validateStatus);
-        console.log(this.state.bidAmount.validateStatus);
         return;
       }
 
@@ -265,7 +252,7 @@ class SubmitBidComponent extends React.Component {
                           description={this.state.detailsRevealEnd.toString()}/>
                       </List.Item>
                     </List>
-                      
+
                       {/* form */}
                       <br />
                       <Divider />
@@ -292,7 +279,7 @@ class SubmitBidComponent extends React.Component {
                             </Select>
                         </Form.Item>
                         <Form.Item
-                          label="Nonce" 
+                          label="Nonce"
                           hasFeedback
                           validateStatus={this.state.nonce.validateStatus}
                           help={this.state.nonce.errorMsg}>
@@ -306,7 +293,7 @@ class SubmitBidComponent extends React.Component {
                           />
                         </Form.Item>
                         <Form.Item
-                          label="Amount" 
+                          label="Amount"
                           hasFeedback
                           validateStatus={this.state.bidAmount.validateStatus}
                           help={this.state.bidAmount.errorMsg}>
@@ -318,7 +305,7 @@ class SubmitBidComponent extends React.Component {
                             placeholder="Amount"
                             addonAfter="ETH"
                             style={{ width: 200, marginRight: '3%' }}
-                          /> 
+                          />
                         </Form.Item>
                         <Form.Item>
                           <MyButton type="primary" htmlType="submit" className="submit-bid-button">
@@ -326,7 +313,7 @@ class SubmitBidComponent extends React.Component {
                           </MyButton>
                         </Form.Item>
                       </Form>
-                      <br/>              
+                      <br/>
                     </Container>
                     </Paper>
                 </Box>
