@@ -23,7 +23,7 @@ class HomeComponent extends React.Component {
         return(
             <div className = "HomeComponent">
                 <Box py={8} px={10}>
-                    <Paper style={{maxHeight: '57vh'}} elevation={6}>
+                    <Paper style={{maxHeight: '75vh', overflow: 'auto'}} elevation={6}>
                         <div>
                             <img style={{maxWidth:'30wv', maxHeight:'30vh'}} src={logo} alt="drizzle-logo" />
                         </div><br/>

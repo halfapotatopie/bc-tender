@@ -1,6 +1,6 @@
 
 .secondaryBar{
-    background-image: linear-gradient(90deg, #304ffe 30%, #2c387e 90%);
+    background-image: linear-gradient(90deg, #2c387e 30%, #304ffe 90%);
     align-items: center;
     z-index: 1000;
 }

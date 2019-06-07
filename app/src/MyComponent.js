@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2),
     marginTop: 'auto',
     maxHeight: '15vh',
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: '#FAFAFA',
   }, 
 
 }));
@@ -41,7 +41,7 @@ function MyComponent() {
 
     return(
 
-      <div className="App" style={{backgroundColor:'#f5f5f5'}}>
+      <div className="App" style={{backgroundColor:'#cfd8dc'}}>
         <CssBaseline>
           <Header />
           <BrowserRouter>
