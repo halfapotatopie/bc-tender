@@ -145,7 +145,8 @@ class RevealBidComponent extends React.Component {
         return;
       }*/
       revealBid(this.state.chosenAccount,this.state.nonce.value, this.state.bidAmount.value)
-      console.log("submitted")
+      .then(console.log("submitted"))
+     
       console.log(this.state.chosenAccount)
       console.log(this.state.nonce.value)
       console.log(this.state.bidAmount.value)
