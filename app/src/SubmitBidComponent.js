@@ -239,6 +239,7 @@ class SubmitBidComponent extends React.Component {
         color: 'white',
         height: 48,
         padding: '0 30px',
+        align: "center",
       });
 
       if (this.state.validPhase && this.state.detailsLoaded && this.state.accountsLoaded) {
@@ -261,11 +262,12 @@ class SubmitBidComponent extends React.Component {
                       >
                         <Descriptions.Item label="Project Description">{this.state.detailsDescription}</Descriptions.Item>
                         <Descriptions.Item label="Deposit">{this.state.detailsDeposit}</Descriptions.Item>
-                        {/* Error trying to fetch dates
                         
-                        <Descriptions.Item label="Bid End">{this.state.detailsBidEnd}</Descriptions.Item>
+                        
+                        <Descriptions.Item label="Bid End">{this.state.detailsBidEnd.toString()}</Descriptions.Item>
+                        {/* Error trying to fetch dates
+                       
                         <Descriptions.Item label="Revelation End">{this.state.detailsRevealEnd}</Descriptions.Item>
-
                          */}
                        
                       </Descriptions>
