@@ -375,7 +375,7 @@ class ViewResultComponent extends React.Component {
 
                         </Form.Item>
                         <Form.Item>
-                          <MyButton type="primary"
+                          <MyButton type="submit"
                           className="generate-result-button"
                           onClick={this.generateResult}>
                             Generate Result
