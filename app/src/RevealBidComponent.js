@@ -136,16 +136,17 @@ class RevealBidComponent extends React.Component {
 
     handleSubmit(event) {
       event.preventDefault();
-      if (!this.state.validForm) {
+      //err handling notification -- DOES NOT MATTER IN CODE
+      /*if (!this.state.validForm) {
         notification.error({
           message: "Error",
           description: "Make sure all fields are filled in correctly!"
         });
         return;
-      }
-
+      }*/
       revealBid(this.state.chosenAccount,this.state.nonce.value, this.state.bidAmount.value)
-      .then(res => {
+      console.log("submitted")
+      /*.then(res => {
         notification.success({
           message: "Success",
           description: "Revealed bid successfully!"
@@ -156,7 +157,7 @@ class RevealBidComponent extends React.Component {
           message: "Error",
           description: "Incorrect nonce and/or amount!"
         });
-      });
+      });*/
     }
 
     validateNonce(nonce) {

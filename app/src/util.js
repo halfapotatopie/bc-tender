@@ -8,9 +8,9 @@ const HashGeneratorJson = require("./contracts/HashGenerator.json");
 const TenderJson = require("./contracts/Tender.json");  //set ABI output from truffle
 // const tChainId = Object.keys(TenderJson.networks)[0]; //picks the first deployed network
                                                             //make sure this is the right deployed network
-const HashGenerator = new web3.eth.Contract(HashGeneratorJson.abi, "0xb75755740d8fef3ea610a5b9ffe3cef48d6184b1"); // Copy address of contract deployed on remix and replace this address
+const HashGenerator = new web3.eth.Contract(HashGeneratorJson.abi, "0xc9d2a49099c24f79af235222c539805396f9620a"); // Copy address of contract deployed on remix and replace this address
 // const Tender = new web3.eth.Contract(TenderJson.abi, TenderJson.networks[tChainId].address);
-const Tender = new web3.eth.Contract(TenderJson.abi, "0x5d47c7583cab4cbd1f2c196674845ccd81c4ac0a"); // Copy address of contract deployed on remix and replace this address
+const Tender = new web3.eth.Contract(TenderJson.abi, "0x30d23ab2787204d39a7e0d7f66232d4f021015aa"); // Copy address of contract deployed on remix and replace this address
 
 
 export function getAllAccounts() {
@@ -80,7 +80,7 @@ export function submitHashedBid(account, hash, depositInEth) {
 
 export function revealBid(account, nonce, amount) {
   try {
-    Tender.methods.revealBid(nonce, amount).send({from: account})
+    Tender.methods.revealBid(nonce, amount).send({from: account, gas: "200000"})
     .then(res => {
       return true;
     });

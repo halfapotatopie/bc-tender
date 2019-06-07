@@ -137,7 +137,6 @@ class SubmitBidComponent extends React.Component {
         });
         return;
       }
-
       getHash(this.state.nonce.value, this.state.bidAmount.value)
       .then(hash => {
         console.log("hash:");
