@@ -105,6 +105,7 @@ export async function reopenTender(account, desc, biddingDuration, revelationDur
     let action = await Tender.methods.reopenTender(desc, biddingDuration, revelationDuration,depositAmount).send({from: account});
     return true;
   } catch(err) {
+    console.log(err);
     return false;
   }
 };
