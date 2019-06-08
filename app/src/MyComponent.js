@@ -41,7 +41,7 @@ function MyComponent() {
 
     return(
 
-      <div className="App" style={{backgroundColor:'#cfd8dc'}}>
+      <div className="App" style={{backgroundColor:'#eceff1'}}>
         <CssBaseline>
           <Header />
           <BrowserRouter>
