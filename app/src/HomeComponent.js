@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Button } from '@material-ui/core';
+import { Box, Typography, Button, Paper } from '@material-ui/core';
 import { styled } from '@material-ui/styles';
 // import logo from './logo.png';
 import logo from './tender(small).png';
@@ -23,22 +23,22 @@ class HomeComponent extends React.Component {
         return(
             <div className = "HomeComponent">
                 <Box py={8} px={10}>
+                    <Paper style={{maxHeight: '75vh', overflow: 'auto'}} elevation={6}>
                         <div>
-                            <img src={logo} alt="drizzle-logo" />
+                            <img style={{maxWidth:'30wv', maxHeight:'30vh'}} src={logo} alt="drizzle-logo" />
                         </div><br/>
-                        <Typography variant="h3" component="h3">
-                            Welcome
-                        </Typography>
-                        <Typography variant="h6" component="h6">
-                            to Tender App
+                        <Typography variant="h5" component="h5">
+                            Welcome to Tender
                         </Typography>
                         <Typography component="p">
                             {displayText}
                         </Typography>
-                        <br/><br/>
+                        <br/>
                         <MyButton href='/bid'>
                             Submit A Bid
                         </MyButton>
+                        <br/><br/>
+                    </Paper>
                 </Box>
         </div>
         )

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Container, Paper } from '@material-ui/core';
-import { Button, Form, Input, notification, Select, Divider } from 'antd';
+import { Box, Container, Paper, Button } from '@material-ui/core';
+import { Form, Input, notification, Select, Divider } from 'antd';
 import { getAllAccounts, getPhase, reopenTender,
          closeContract, endRevelation, hasBeenChecked,
          hasWinner, getResult } from "./util";
@@ -349,7 +349,7 @@ class ViewResultComponent extends React.Component {
         return (
             <div className="ViewResultComponent">
                 <Box py={6} px={10}>
-                  <Paper style={{maxHeight: '60vh', overflow: 'auto'}}>
+                  <Paper style={{maxHeight: '60vh', overflow: 'auto'}} elevation={6}>
                     <Container>
                       <br/>
                       <h3>Check the result here</h3>
@@ -375,7 +375,7 @@ class ViewResultComponent extends React.Component {
 
                         </Form.Item>
                         <Form.Item>
-                          <MyButton type="primary"
+                          <MyButton type="submit"
                           className="generate-result-button"
                           onClick={this.generateResult}>
                             Generate Result
@@ -442,12 +442,12 @@ class ViewResultComponent extends React.Component {
                           />
                         </Form.Item>
                         <Form.Item >
-                          <MyButton type="primary" htmlType="submit" className="reopen-tender-button">
+                          <MyButton type="submit" className="reopen-tender-button">
                             Reopen Tender
                           </MyButton>
                         </Form.Item>
                         <Form.Item >
-                          <MyButton type="primary"
+                          <MyButton type="submit"
                           className="close-tender-button"
                           onClick={this.closeTender}>
                             Close Tender

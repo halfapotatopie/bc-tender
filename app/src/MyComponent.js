@@ -29,7 +29,8 @@ const useStyles = makeStyles(theme => ({
   footer: {
     padding: theme.spacing(2),
     marginTop: 'auto',
-    backgroundColor: '#fff',
+    maxHeight: '15vh',
+    backgroundColor: '#FAFAFA',
   }, 
 
 }));
@@ -40,7 +41,7 @@ function MyComponent() {
 
     return(
 
-      <div className="App">
+      <div className="App" style={{backgroundColor:'#eceff1'}}>
         <CssBaseline>
           <Header />
           <BrowserRouter>
