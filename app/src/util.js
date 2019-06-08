@@ -8,9 +8,9 @@ const HashGeneratorJson = require("./contracts/HashGenerator.json");
 const TenderJson = require("./contracts/Tender.json");  //set ABI output from truffle
 // const tChainId = Object.keys(TenderJson.networks)[0]; //picks the first deployed network
                                                             //make sure this is the right deployed network
-const HashGenerator = new web3.eth.Contract(HashGeneratorJson.abi, "0x25bc87baba84e90b99232a4e1d6eae670b6ccc49"); // Copy address of contract deployed on remix and replace this address
+const HashGenerator = new web3.eth.Contract(HashGeneratorJson.abi, "0xbd03b1c1634f01ac6a28d9070ed2860c2ffd073b"); // Copy address of contract deployed on remix and replace this address
 // const Tender = new web3.eth.Contract(TenderJson.abi, TenderJson.networks[tChainId].address);
-const Tender = new web3.eth.Contract(TenderJson.abi, "0x4aab2ddbdefea102fb5021a6b991bf7f8803918c"); // Copy address of contract deployed on remix and replace this address
+const Tender = new web3.eth.Contract(TenderJson.abi, "0xab3969eafe4dc110f97213d99afc8b1719d9d9b2"); // Copy address of contract deployed on remix and replace this address
 
 
 export async function getAllAccounts() {
@@ -61,10 +61,10 @@ export async function submitHashedBid(account, hash, depositInEth) {
   try {
     let bidBefore = await Tender.methods.hasBidBefore(account).call();
     if (bidBefore) {
-      let action = Tender.methods.makeBid(hash).send({from: account});
+      let action = Tender.methods.makeBid(hash).send({from: account, gas: "2000000"});
       return true;
     } else {
-      let action = Tender.methods.makeBid(hash).send({from: account, value: (depositInEth * Math.pow(10, 18))});
+      let action = Tender.methods.makeBid(hash).send({from: account, value: (depositInEth * Math.pow(10, 18)), gas: "2000000"});
       return true;
     }
   } catch(err) {
@@ -74,7 +74,7 @@ export async function submitHashedBid(account, hash, depositInEth) {
 
 export async function revealBid(account, nonce, amount) {
   try {
-    let action = await Tender.methods.revealBid(nonce, amount).send({from: account, gas: "200000"});
+    let action = await Tender.methods.revealBid(nonce, amount).send({from: account, gas: "2000000"});
     return true;
   } catch(err) {
     return false;
@@ -83,7 +83,7 @@ export async function revealBid(account, nonce, amount) {
 
 export async function endRevelation(account) {
   try {
-    let action = await Tender.methods.endRevelation().send({from: account});
+    let action = await Tender.methods.endRevelation().send({from: account, gas: "2000000"});
     return true;
   } catch(err) {
     console.log(err);
@@ -93,7 +93,7 @@ export async function endRevelation(account) {
 
 export async function closeContract(account) {
   try {
-    let action = await Tender.methods.close().send({from: account});
+    let action = await Tender.methods.close().send({from: account, gas: "2000000"});
     return true;
   } catch(err) {
     return false;
