@@ -171,6 +171,7 @@ contract Tender {
 
     // Changes the details of the Tender project
     function reopenTender(string memory desc, uint biddingDuration, uint revelationDuration, uint depositAmount) public ownerOnly {
+        require(checkedByOwner);
         projectDescription = desc;
         biddingEnd = now + (biddingDuration * 1 minutes);
         revelationEnd = biddingEnd + (revelationDuration * 1 minutes);

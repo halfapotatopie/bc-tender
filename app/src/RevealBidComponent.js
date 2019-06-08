@@ -44,7 +44,6 @@ class RevealBidComponent extends React.Component {
       this.handleSubmit = this.handleSubmit.bind(this);
       this.validateNonce = this.validateNonce.bind(this);
       this.validateAmount = this.validateAmount.bind(this);
-      this.updateValidForm = this.updateValidForm.bind(this);
     }
 
 
@@ -117,7 +116,6 @@ class RevealBidComponent extends React.Component {
         chosenAccount: value,
         accountChosen: true
       });
-      this.updateValidForm();
     }
 
     handleInputChange(evt, validationFunc) {
@@ -131,12 +129,13 @@ class RevealBidComponent extends React.Component {
             ...validationFunc(inputValue)
           }
       });
-      this.updateValidForm();
     }
 
     handleSubmit(event) {
       event.preventDefault();
-      if (!this.state.validForm) {
+      if (!(this.state.accountChosen
+              && this.state.nonce.validateStatus === "success"
+              && this.state.bidAmount.validateStatus === "success")) {
         notification.error({
           message: "Error",
           description: "Make sure all fields are filled in correctly!"
@@ -146,15 +145,22 @@ class RevealBidComponent extends React.Component {
 
       revealBid(this.state.chosenAccount,this.state.nonce.value, this.state.bidAmount.value)
       .then(res => {
-        notification.success({
-          message: "Success",
-          description: "Revealed bid successfully!"
-        });
+        if (res) {
+          notification.success({
+            message: "Success",
+            description: "Revealed bid successfully!"
+          });
+        } else {
+          notification.error({
+            message: "Error",
+            description: "Incorrect nonce and/or amount!"
+          });
+        }
       }).catch(error => {
         console.log(error);
         notification.error({
           message: "Error",
-          description: "Incorrect nonce and/or amount!"
+          description: "An error occurred!"
         });
       });
     }
@@ -193,14 +199,6 @@ class RevealBidComponent extends React.Component {
       }
     }
 
-    updateValidForm() {
-      this.setState({
-        validForm: (this.state.accountChosen
-                && this.state.nonce.validateStatus === "success"
-                && this.state.bidAmount.validateStatus === "success")
-      });
-    }
-
     componentDidMount() {
       this.checkPhase();
       this.loadProjectDetails();
@@ -208,7 +206,6 @@ class RevealBidComponent extends React.Component {
     }
 
 
-    // TODO: Reorganise stuff and restyle if needed
     render() {
       const MyButton = styled(Button)({
         background: 'linear-gradient(30deg, #ff4081 30%, #448aff 90%)',
@@ -222,7 +219,6 @@ class RevealBidComponent extends React.Component {
       });
 
       if (this.state.validPhase && this.state.detailsLoaded && this.state.accountsLoaded) {
-        // TODO: Display project details (get from this.state)
         return (
             <div className="RevealBidComponent">
                 <Box py={6} px={10}>
@@ -256,7 +252,7 @@ class RevealBidComponent extends React.Component {
                     <br/>
                       <Divider />
                       <br />
-                      <Form 
+                      <Form
                         onSubmit={this.handleSubmit}>
                         <Form.Item label="Account">
                             <Select
@@ -316,9 +312,42 @@ class RevealBidComponent extends React.Component {
             </div>
         );
       } else if (this.state.validPhase && this.state.detailsLoaded) {
-        // TODO: Return a page with just project details
         return (
-          <div>
+          <div className="RevealBidComponent">
+              <Box py={6} px={10}>
+                <Paper style={{maxHeight: '60vh', overflow: 'auto'}}>
+                  <Container>
+                    <br/>
+                    <h3>Reveal your bid</h3>
+                    <br/>
+                    <List itemLayout="horizontal">
+                    <List.Item>
+                      <List.Item.Meta
+                        title="Project Description"
+                        description={this.state.detailsDescription}/>
+                    </List.Item>
+                    <List.Item>
+                      <List.Item.Meta
+                        title="Deposit"
+                        description={this.state.detailsDeposit}/>
+                    </List.Item>
+                    <List.Item>
+                      <List.Item.Meta
+                        title="Bid End"
+                        description={this.state.detailsBidEnd.toString()}/>
+                    </List.Item>
+                    <List.Item>
+                      <List.Item.Meta
+                        title="Reveal End"
+                        description={this.state.detailsRevealEnd.toString()}/>
+                    </List.Item>
+                  </List>
+                  <br/>
+                    <Divider />
+                    <br />
+                  </Container>
+                </Paper>
+              </Box>
           </div>
         );
       } else if (this.state.validPhase) { // Returns an empty page
@@ -327,14 +356,12 @@ class RevealBidComponent extends React.Component {
           </div>
         );
       } else if (!this.state.prevPhaseEnded) {
-        // TODO: Restyle
         return (
           <div>
             Revelation Phase has not started!
           </div>
         );
       } else {
-        // TODO: Restyle
         return (
           <div>
             Revelation Phase has ended!

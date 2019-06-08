@@ -14,7 +14,6 @@ class ViewResultComponent extends React.Component {
       super(props);
       this.state = {
         validPhase: false,
-        validForm: false,
         hasBeenChecked: false,
         hasWinner: false,
         winner: "",
@@ -55,7 +54,6 @@ class ViewResultComponent extends React.Component {
       this.validateBiddingDuration = this.validateBiddingDuration.bind(this);
       this.validateRevelationDuration = this.validateRevelationDuration.bind(this);
       this.validateDepositAmount = this.validateDepositAmount.bind(this);
-      this.updateValidForm = this.updateValidForm.bind(this);
       this.generateResultMessage = this.generateResultMessage.bind(this);
       this.generateResult = this.generateResult.bind(this);
       this.closeTender = this.closeTender.bind(this);
@@ -64,11 +62,11 @@ class ViewResultComponent extends React.Component {
 
     generateResultMessage() {
       if (this.state.hasBeenChecked && this.state.hasWinner) {
-        return `Winner: ${this.state.winner}\nWinning Bid: ${this.state.winningBid}`;
+        return `Winner: ${this.state.winner} \n Winning Bid: ${this.state.winningBid}`;
       } else if (this.state.hasBeenChecked) {
         return "Tender ended with no winner";
       } else {
-        return "Results have not been computed yet.";
+        return "Result has not been computed yet.";
       }
     }
 
@@ -123,17 +121,24 @@ class ViewResultComponent extends React.Component {
         return;
       }
 
-      endRevelation(this.state.chosenAccount)
+      endRevelation(this.state.chosenAccount) // change this?
       .then(res => {
-        notification.success({
-          message: "Success",
-          description: "Generated result successfully!"
-        });
+        if (res) {
+          notification.success({
+            message: "Success",
+            description: "Generated result successfully!"
+          });
+        } else {
+          notification.error({
+            message: "Error",
+            description: "You are not the owner or have already generated result!"
+          });
+        }
       }).catch(error => {
         console.log(error);
         notification.error({
           message: "Error",
-          description: "You are not the owner!"
+          description: "An error occurred!"
         });
       });
     }
@@ -150,15 +155,22 @@ class ViewResultComponent extends React.Component {
 
       closeContract(this.state.chosenAccount)
       .then(res => {
-        notification.success({
-          message: "Success",
-          description: "Closed tender successfully!"
-        });
+        if (res) {
+          notification.success({
+            message: "Success",
+            description: "Closed tender successfully!"
+          });
+        } else {
+          notification.error({
+            message: "Error",
+            description: "You are not the owner or result has not been generated!"
+          });
+        }
       }).catch(error => {
         console.log(error);
         notification.error({
           message: "Error",
-          description: "You are not the owner!"
+          description: "An error occurred!"
         });
       });
     }
@@ -203,7 +215,6 @@ class ViewResultComponent extends React.Component {
         chosenAccount: value,
         accountChosen: true
       });
-      this.updateValidForm();
     }
 
     handleInputChange(evt, validationFunc) {
@@ -217,12 +228,15 @@ class ViewResultComponent extends React.Component {
             ...validationFunc(inputValue)
           }
       });
-      this.updateValidForm();
     }
 
     handleSubmit(event) {
       event.preventDefault();
-      if (!this.state.validForm) {
+      if (!(this.state.accountChosen
+              && (this.state.newDescription.validateStatus === "success")
+              && (this.state.newBiddingDuration.validateStatus === "success")
+              && (this.state.newRevelationDuration.validateStatus === "success")
+              && (this.state.newDepositAmount.validateStatus === "success"))) {
         notification.error({
           message: "Error",
           description: "Make sure all fields are filled in correctly!"
@@ -234,15 +248,24 @@ class ViewResultComponent extends React.Component {
                    this.state.newBiddingDuration.value, this.state.newRevelationDuration.value,
                    this.state.newDepositAmount.value)
       .then(res => {
-        notification.success({
-          message: "Success",
-          description: "Reopened tender successfully!"
-        });
+        console.log("reopening");
+        console.log(res);
+        if (res) {
+          notification.success({
+            message: "Success",
+            description: "Reopened tender successfully!"
+          });
+        } else {
+          notification.error({
+            message: "Error",
+            description: "You are not the owner or result has not been generated!"
+          });
+        }
       }).catch(error => {
         console.log(error);
         notification.error({
           message: "Error",
-          description: "You are not the owner!"
+          description: "An error occurred!"
         });
       });
     }
@@ -303,16 +326,6 @@ class ViewResultComponent extends React.Component {
       }
     }
 
-    updateValidForm() {
-      this.setState({
-        validForm: (this.state.accountChosen
-                && this.state.newDescription.validStatus === "success"
-                && this.state.newBiddingDuration.validStatus === "success"
-                && this.state.newRevelationDuration.validStatus === "success"
-                && this.state.newDepositAmount.validStatus === "success")
-      });
-    }
-
     componentDidMount() {
       this.checkPhase();
       this.loadResultDetails();
@@ -320,7 +333,6 @@ class ViewResultComponent extends React.Component {
     }
 
 
-    // TODO: Reorganise stuff and restyle if needed
     render() {
       const MyButton = styled(Button)({
         background: 'linear-gradient(30deg, #ff4081 30%, #448aff 90%)',
@@ -397,7 +409,7 @@ class ViewResultComponent extends React.Component {
                             placeholder="Duration"
                             addonAfter="min"
                             style={{ width: '20vw', marginRight: '3%'}}
-                          /> 
+                          />
                         </Form.Item>
                         <Form.Item
                           label="Revelation Duration"
@@ -412,7 +424,7 @@ class ViewResultComponent extends React.Component {
                             placeholder="Duration"
                             addonAfter="min"
                             style={{ width: '20vw', marginRight: '3%'}}
-                          /> 
+                          />
                         </Form.Item>
                         <Form.Item
                           label="Deposit Amount"
@@ -448,10 +460,18 @@ class ViewResultComponent extends React.Component {
             </div>
         );
       } else if (this.state.validPhase && this.state.resultDetailsLoaded) {
-        // TODO: Restyle
         return (
-          <div>
-            {this.generateResultMessage()}
+          <div className="ViewResultComponent">
+              <Box py={6} px={10}>
+                <Paper style={{maxHeight: '60vh', overflow: 'auto'}}>
+                  <Container>
+                    <br/>
+                    <h3>Check the result here</h3>
+                    {this.generateResultMessage()}
+                    <br/>
+                  </Container>
+                </Paper>
+              </Box>
           </div>
         );
       } else if (this.state.validPhase) { // Returns an empty page
@@ -460,7 +480,6 @@ class ViewResultComponent extends React.Component {
           </div>
         );
       } else {
-        // TODO: Restyle
         return (
           <div>
             Revelation Phase has not ended!

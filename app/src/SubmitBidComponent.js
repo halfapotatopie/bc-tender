@@ -2,7 +2,6 @@ import React from 'react';
 import { Box, Container, Paper, Divider } from '@material-ui/core';
 import { Button, Form, Input, notification, Select, List } from 'antd';
 import { styled } from '@material-ui/styles';
-
 import { getAllAccounts, getPhase, getProjectDetails, getHash, submitHashedBid } from "./util";
 
 const { Option } = Select;
@@ -14,7 +13,6 @@ class SubmitBidComponent extends React.Component {
       super(props);
       this.state = {
         validPhase: false,
-        validForm: false,
         detailsDescription: "",
         detailsDeposit: 0,
         detailsBidEnd: 0,
@@ -46,7 +44,6 @@ class SubmitBidComponent extends React.Component {
       this.handleSubmit = this.handleSubmit.bind(this);
       this.validateNonce = this.validateNonce.bind(this);
       this.validateAmount = this.validateAmount.bind(this);
-      this.updateValidForm = this.updateValidForm.bind(this);
     }
 
 
@@ -111,7 +108,6 @@ class SubmitBidComponent extends React.Component {
         chosenAccount: value,
         accountChosen: true
       });
-      this.updateValidForm();
     }
 
     handleInputChange(evt, validationFunc) {
@@ -125,12 +121,13 @@ class SubmitBidComponent extends React.Component {
             ...validationFunc(inputValue)
           }
       });
-      this.updateValidForm();
     }
 
     handleSubmit(event) {
       event.preventDefault();
-      if (!this.state.validForm) {
+      if (!(this.state.accountChosen
+              && this.state.nonce.validateStatus === "success"
+              && this.state.bidAmount.validateStatus === "success")) {
         notification.error({
           message: "Error",
           description: "Make sure all fields are filled in correctly!"
@@ -140,19 +137,24 @@ class SubmitBidComponent extends React.Component {
 
       getHash(this.state.nonce.value, this.state.bidAmount.value)
       .then(hash => {
-        console.log("hash:");
-        console.log(hash);
         return submitHashedBid(this.state.chosenAccount, hash, this.state.detailsDeposit);
       }).then(res => {
-        notification.success({
-          message: "Success",
-          description: "Submitted hashed bid successfully!"
-        });
+        if (res) {
+          notification.success({
+            message: "Success",
+            description: "Submitted hashed bid successfully!"
+          });
+        } else {
+          notification.error({
+            message: "Error",
+            description: "Unable to submit hashed bid!"
+          });
+        }
       }).catch(error => {
         console.log(error);
         notification.error({
           message: "Error",
-          description: "Unable to submit hashed bid!"
+          description: "An error occurred!"
         });
       });
     }
@@ -191,14 +193,6 @@ class SubmitBidComponent extends React.Component {
       }
     }
 
-    updateValidForm() {
-      this.setState({
-        validForm: (this.state.accountChosen
-                && this.state.nonce.validateStatus === "success"
-                && this.state.bidAmount.validateStatus === "success")
-      });
-    }
-
     componentDidMount() {
       this.checkPhase();
       this.loadProjectDetails();
@@ -206,7 +200,6 @@ class SubmitBidComponent extends React.Component {
     }
 
 
-    // TODO: Reorganise stuff and restyle if needed
     render() {
 
       const MyButton = styled(Button)({
@@ -221,7 +214,6 @@ class SubmitBidComponent extends React.Component {
       });
 
       if (this.state.validPhase && this.state.detailsLoaded && this.state.accountsLoaded) {
-        // TODO: Display project details (get from this.state)
         return (
             <div className="SubmitBidComponent">
                 <Box py={6} px={10}>
@@ -252,8 +244,6 @@ class SubmitBidComponent extends React.Component {
                           description={this.state.detailsRevealEnd.toString()}/>
                       </List.Item>
                     </List>
-
-                      {/* form */}
                       <br />
                       <Divider />
                       <br />
@@ -319,9 +309,43 @@ class SubmitBidComponent extends React.Component {
             </div>
         );
       } else if (this.state.validPhase && this.state.detailsLoaded) {
-        // TODO: Return a page with just project details
         return (
-          <div>
+          <div className="SubmitBidComponent">
+              <Box py={6} px={10}>
+                <Paper style={{maxHeight: '60vh', overflow: 'auto'}}>
+                  <Container>
+                    <br/>
+                    <h3>Submit your bid</h3>
+                    <br />
+                  <List itemLayout="horizontal">
+                    <List.Item>
+                      <List.Item.Meta
+                        title="Project Description"
+                        description={this.state.detailsDescription}/>
+                    </List.Item>
+                    <List.Item>
+                      <List.Item.Meta
+                        title="Deposit"
+                        description={this.state.detailsDeposit}/>
+                    </List.Item>
+                    <List.Item>
+                      <List.Item.Meta
+                        title="Bid End"
+                        description={this.state.detailsBidEnd.toString()}/>
+                    </List.Item>
+                    <List.Item>
+                      <List.Item.Meta
+                        title="Reveal End"
+                        description={this.state.detailsRevealEnd.toString()}/>
+                    </List.Item>
+                  </List>
+                    <br />
+                    <Divider />
+                    <br />
+                    <br/>
+                  </Container>
+                  </Paper>
+              </Box>
           </div>
         );
       } else if (this.state.validPhase) { // Returns an empty page
@@ -330,7 +354,6 @@ class SubmitBidComponent extends React.Component {
           </div>
         );
       } else {
-        // TODO: Restyle
         return (
           <div>
             Bidding Phase has ended!
@@ -341,34 +364,3 @@ class SubmitBidComponent extends React.Component {
 }
 
 export default SubmitBidComponent;
-//
-// <form>
-//     <div>
-//         <div className="col-1">
-//             <TextField
-//                 label="Enter bid amount"
-//                 margin="normal"
-//                 variant="outlined"
-//                 value={this.state.bidAmt}
-//                 onChange={this.onChange}
-//             />
-//         </div>
-//         <div className="co1-2">
-//             <TextField
-//                 label="Enter nounce"
-//                 margin="normal"
-//                 variant="outlined"
-//                 value={this.state.nounce}
-//                 onChange={this.onChange}
-//             />
-//         </div>
-//         <div className="col-3">
-//         <Button variant="contained"
-//                 color="secondary"
-//                 type="submit"
-//                 value="submit">
-//             Send
-//         </Button>
-//         </div>
-//     </div>
-// </form>

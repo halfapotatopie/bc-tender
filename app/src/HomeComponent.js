@@ -1,10 +1,11 @@
 import React from 'react';
-import { Box, Typography, Button, Link } from '@material-ui/core';
+import { Box, Typography, Button } from '@material-ui/core';
 import { styled } from '@material-ui/styles';
-import logo from './logo.png';
+// import logo from './logo.png';
+import logo from './tender(small).png';
 
 const displayText = "This is a blockchain application for tender processes!";
-// TODO: Redesign this?
+
 class HomeComponent extends React.Component {
 
     render() {

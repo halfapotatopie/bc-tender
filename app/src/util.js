@@ -8,16 +8,16 @@ const HashGeneratorJson = require("./contracts/HashGenerator.json");
 const TenderJson = require("./contracts/Tender.json");  //set ABI output from truffle
 // const tChainId = Object.keys(TenderJson.networks)[0]; //picks the first deployed network
                                                             //make sure this is the right deployed network
-const HashGenerator = new web3.eth.Contract(HashGeneratorJson.abi, "0xb75755740d8fef3ea610a5b9ffe3cef48d6184b1"); // Copy address of contract deployed on remix and replace this address
+const HashGenerator = new web3.eth.Contract(HashGeneratorJson.abi, "0x4f11215fd54b5df9f3ce1292537345bd647374f4"); // Copy address of contract deployed on remix and replace this address
 // const Tender = new web3.eth.Contract(TenderJson.abi, TenderJson.networks[tChainId].address);
-const Tender = new web3.eth.Contract(TenderJson.abi, "0x5d47c7583cab4cbd1f2c196674845ccd81c4ac0a"); // Copy address of contract deployed on remix and replace this address
+const Tender = new web3.eth.Contract(TenderJson.abi, "0xd93bcefa71dd602544aea81302981df4d05d1e8f"); // Copy address of contract deployed on remix and replace this address
 
 
-export function getAllAccounts() {
+export async function getAllAccounts() {
   return web3.eth.getAccounts();
 };
 
-export function hasBeenChecked() {
+export async function hasBeenChecked() {
   try {
     return Tender.methods.hasBeenChecked().call();
   } catch(err) {
@@ -25,7 +25,7 @@ export function hasBeenChecked() {
   }
 };
 
-export function isOwner(address) {
+export async function isOwner(address) {
   try {
     return Tender.methods.isOwner(address).call();
   } catch(err) {
@@ -33,7 +33,7 @@ export function isOwner(address) {
   }
 };
 
-export function hasWinner() {
+export async function hasWinner() {
   try {
     return Tender.methods.hasWinner().call();
   } catch(err) {
@@ -41,7 +41,7 @@ export function hasWinner() {
   }
 };
 
-export function getHash(nonce, amount) {
+export async function getHash(nonce, amount) {
   try {
     return HashGenerator.methods.generateHash(nonce, amount).call();
   } catch(err) {
@@ -49,7 +49,7 @@ export function getHash(nonce, amount) {
   }
 };
 
-export function getPhase() {
+export async function getPhase() {
   try {
     return Tender.methods.getPhase().call();
   } catch(err) {
@@ -57,72 +57,59 @@ export function getPhase() {
   }
 };
 
-export function submitHashedBid(account, hash, depositInEth) {
+export async function submitHashedBid(account, hash, depositInEth) {
   try {
-    Tender.methods.hasBidBefore(account).call()
-    .then(bidBefore => {
-      if (bidBefore) {
-        Tender.methods.makeBid(hash).send({from: account})
-        .then(res => {
-          return true;
-        });
-      } else {
-        Tender.methods.makeBid(hash).send({from: account, value: (depositInEth * Math.pow(10, 18))})
-        .then(res => {
-          return true;
-        });
-      }
-    });
-  } catch(err) {
-    throw err;
-  }
-};
-
-export function revealBid(account, nonce, amount) {
-  try {
-    Tender.methods.revealBid(nonce, amount).send({from: account})
-    .then(res => {
+    let bidBefore = await Tender.methods.hasBidBefore(account).call();
+    if (bidBefore) {
+      let action = Tender.methods.makeBid(hash).send({from: account});
       return true;
-    });
-  } catch(err) {
-    throw err;
-  }
-};
-
-export function endRevelation(account) {
-  try {
-    Tender.methods.endRevelation().send({from: account})
-    .then(res => {
+    } else {
+      let action = Tender.methods.makeBid(hash).send({from: account, value: (depositInEth * Math.pow(10, 18))});
       return true;
-    });
+    }
   } catch(err) {
-    throw err;
+    return false;
   }
 };
 
-export function closeContract(account) {
+export async function revealBid(account, nonce, amount) {
   try {
-    Tender.methods.close().send({from: account})
-    .then(res => {
-      return true;
-    });
+    let action = await Tender.methods.revealBid(nonce, amount).send({from: account});
+    return true;
   } catch(err) {
-    throw err;
+    return false;
   }
 };
 
-export function reopenTender(account, desc, biddingDuration, revelationDuration, depositAmount) {
+export async function endRevelation(account) {
   try {
-    Tender.methods.reopenTender(desc, biddingDuration, revelationDuration,depositAmount).send({from: account})
-    .then(res => {
-      return true;
-    });
+    let action = await Tender.methods.endRevelation().send({from: account});
+    return true;
   } catch(err) {
-    throw err;
+    console.log(err);
+    return false;
   }
 };
 
-export function getProjectDetails() {
+export async function closeContract(account) {
+  try {
+    let action = await Tender.methods.close().send({from: account});
+    return true;
+  } catch(err) {
+    return false;
+  }
+};
+
+export async function reopenTender(account, desc, biddingDuration, revelationDuration, depositAmount) {
+  try {
+    let action = await Tender.methods.reopenTender(desc, biddingDuration, revelationDuration,depositAmount).send({from: account});
+    return true;
+  } catch(err) {
+    return false;
+  }
+};
+
+export async function getProjectDetails() {
   try {
     return Tender.methods.getProjectDetails().call();
   } catch(err) {
@@ -130,7 +117,7 @@ export function getProjectDetails() {
   }
 };
 
-export function getResult() {
+export async function getResult() {
   try {
     return Tender.methods.getResults().call();
   } catch(err) {
