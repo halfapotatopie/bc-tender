@@ -121,7 +121,7 @@ class ViewResultComponent extends React.Component {
         return;
       }
 
-      endRevelation(this.state.chosenAccount) // change this?
+      endRevelation(this.state.chosenAccount)
       .then(res => {
         if (res) {
           notification.success({
@@ -248,8 +248,6 @@ class ViewResultComponent extends React.Component {
                    this.state.newBiddingDuration.value, this.state.newRevelationDuration.value,
                    this.state.newDepositAmount.value)
       .then(res => {
-        console.log("reopening");
-        console.log(res);
         if (res) {
           notification.success({
             message: "Success",

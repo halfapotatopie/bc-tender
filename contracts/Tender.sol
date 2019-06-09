@@ -14,6 +14,7 @@ contract Tender {
     mapping(address => closedBid) hashedBids;
     mapping(address => bool) bidExists;
     openBid[] private bidQueue;
+    address[] private bidders;
 
     event tenderEndsWithWinner(address winner, uint bid);
     event tenderEndsWithoutWinner();
@@ -78,6 +79,7 @@ contract Tender {
             require(msg.value == (deposit * 1 ether), "Deposit amount is incorrect!");
             hashedBids[msg.sender] = closedBid(hashedBid, now);
             bidExists[msg.sender] = true;
+            bidders.push(msg.sender);
         }
     }
 
@@ -172,10 +174,20 @@ contract Tender {
     // Changes the details of the Tender project
     function reopenTender(string memory desc, uint biddingDuration, uint revelationDuration, uint depositAmount) public ownerOnly {
         require(checkedByOwner);
+        require(!winnerExists);
         projectDescription = desc;
         biddingEnd = now + (biddingDuration * 1 minutes);
         revelationEnd = biddingEnd + (revelationDuration * 1 minutes);
         deposit = depositAmount;
+        winner = address(0);
+        highestBid = 0;
+        winnerExists = false;
+        for (uint i = 0; i < bidders.length; i++) {
+          delete hashedBids[bidders[i]];
+          delete bidExists[bidders[i]];
+        }
+        delete bidders;
+        delete bidQueue;
         checkedByOwner = false;
     }
 
@@ -196,7 +208,7 @@ contract Tender {
     }
 
     // Gets the result after revelation period
-    function getResults() public view onlyAfter(revelationEnd) returns (address, uint) {
+    function getResult() public view onlyAfter(revelationEnd) returns (address, uint) {
         require(checkedByOwner);
         return (winner, highestBid);
     }
