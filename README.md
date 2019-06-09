@@ -1,8 +1,5 @@
 # bc-tender
 
-Works best Node.js v11.
-I really don't know about v12 :/
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## How to set up
