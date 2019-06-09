@@ -1,81 +1,50 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## How to set up
 
-In the project directory, you can run:
+### Install Ganache
 
-### `npm start`
+Install Ganache from (https://www.trufflesuite.com/ganache).
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Set up Ganache
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+Click new workspace.
+Under the server tab, make sure that the hostname is 127.0.0.1, that the port number is 8545 and network id is 5777.
+Under the chain tab, make sure that the gas limit is above 6000000.
+You can change other settings if you like.
+Once done, click save workspace.
 
-### `npm test`
+### Set up the app
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+In the project directory:
 
-### `npm run build`
+#### Run `npm install`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Installs the necessary dependencies in the project directory.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+In the app directory:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### Run `npm install`
 
-### `npm run eject`
+Installs the necessary dependencies in the app directory.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### Run `npm start`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Starts the app on localhost:3000.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Set up Remix
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-
-### Flow to set up:
-
-First, 'truffle compile' in "bc-tender" folder.
-Next, open up ganache and make sure it is on "localhost:8545".
-Open up metamask, change account and copy private key from ganache.
-Then, open up remix.
-Copy Tender.sol and HashGenerator.sol from "bc-tender/contracts" and paste into remix.
-Change environment to web3 provider with right settings.
-Compile and deploy each.
-Copy the address of each and paste over the respective arguments on lines 11 and 13 of "bc-tender/app/src/util.js"
-npm install in app
-And npm run start
+Start remix (https://remix.ethereum.org/).
+Make sure that the environment selected is Web3 Provider and that the endpoint is localhost:8545.
+Create a new file and name it 'HashGenerator.sol'.
+From the project directory, open up HashGenerator.sol.
+Copy its content and paste into HashGenerator.sol on Remix.
+Compile it and deploy it.
+Copy the address of the deployed HashGenerator contract and paste it over the address in line 9 of util.js.
+Go back to remix and created another new file.
+Name it 'Tender.sol'.
+From the project directory, open up Tender.sol.
+Copy its content and paste into Tender.sol on Remix.
+Compile it and deploy it with the necessary parameters.
+Copy the address of the deployed Tender contract and paste it over the address in line 10 of util.js.
+Save the changes made and you can now use the Tender app. :)
