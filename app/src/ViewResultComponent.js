@@ -256,7 +256,7 @@ class ViewResultComponent extends React.Component {
         } else {
           notification.error({
             message: "Error",
-            description: "You are not the owner or result has not been generated!"
+            description: "You cannot reopen the tender if there is already a winner or if you are not the owner or if result has not been generated!"
           });
         }
       }).catch(error => {
@@ -480,7 +480,7 @@ class ViewResultComponent extends React.Component {
       } else {
         return (
           <div>
-            Revelation Phase has not ended!
+            Revelation Phase has not ended or Tender has been closed!
           </div>
         );
       }
